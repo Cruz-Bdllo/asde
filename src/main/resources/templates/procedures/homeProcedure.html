@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tramites</title>
+</head>
+<body>
+
+    <h1>Aqui estan todos los trámites que puedes realizar</h1>
+
+    <p>
+        <h4>¿Deseas agregar uno nuevo? <button type="button"><a th:href="@{/tramites/crear}">Crear</a></button></h4>
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Vigencia</th>
+                <th>Tipo</th>
+                <th>Donde se ingresa</th>
+                <th>Requisitos</th>
+                <th>Modificaciones</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="procedure : ${procedures}">
+                <td th:text="${procedure.name}"></td>
+                <td th:text="${procedure.expiration}"></td>
+                <td th:text="${procedure.type.name()}"></td>
+                <td th:text="${procedure.dependence.name}"></td>
+                <td><button type="button">Ver requisitos</button></td>
+                <td>
+                    <button type="button"><a th:href="@{'/tramites/actualizar/'+${procedure.name}}">Modificar</a></button>
+                </td>
+                <td><button type="button">Eliminar</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

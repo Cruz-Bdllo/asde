@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Procedures</title>
+</head>
+<body>
+    <h1>Generar un nuevo trámite</h1>
+
+    <p>
+        <button type="button"><a th:href="@{/tramites}">Volver a mi lista de trámites</a></button>
+    </p>
+
+    <!--  Procedure form  -->
+    <p>Llena el siguiente formulario para crear el trámite:</p>
+    <form th:action="@{/tramites/crear}" method="post" th:object="${procedure}">
+
+        <!-- Name of procedure -->
+        <p>
+            <label for="name-procedure">Nombre del nuevo trámite: </label>
+            <input type="text" id="name-procedure" th:field="*{name}">
+        </p>
+        <!-- throw error -->
+        <span style="background: red; color: white;"
+              th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+
+        <!-- Expiration -->
+        <p>
+<!--            <label for="expiration">Vigencia: </label>-->
+<!--            <input type="text" id="expiration" name="expiration">-->
+            <label>Vigencia</label><br>
+            <span>
+                <input type="checkbox" name="expiration" value="permanente" id="expiration-permanent">
+                <label for="expiration-permanent">Permanente</label>
+            </span>
+
+            <div id="expiration-date" style="display: block">
+
+                <select name="expiration">
+                    <option value="" selected>Selecciona</option>
+                    <option th:each="quantity : ${quantities}" th:value="${quantity}" th:text="${quantity}"></option>
+                </select>
+
+                <select name="expiration" id="expiration-year">
+                    <option value="" selected>Selecciona</option>
+                    <option value="semanas">semanas</option>
+                    <option value="meses">meses</option>
+                    <option value="años">años</option>
+                </select>
+            </div>
+        </p>
+        <!-- throw error -->
+        <span style="background: red; color: white;"
+              th:if="${#fields.hasErrors('expiration')}" th:errors="*{expiration}"></span>
+
+
+        <!-- Dependence -->
+        <p>
+            <label for="name-dependence">Dependencia en donde se ingresa: </label><br>
+            <select th:field="*{dependence}" id="name-dependence">
+                <option value="0" selected>Selecciona una dependencia</option>
+                <option th:each="dependence : ${dependencies}"
+                        th:value="${dependence.idDependence}" th:text="${dependence.name}"></option>
+            </select>
+            <br>
+            <span style="color: blue">Si la dependencia no se encuentra disponible puedes agregarla
+                <button type="button">Agregar dependencia</button></span>
+        </p>
+        <!-- throw error -->
+        <span style="background: red; color: white;"
+              th:if="${#fields.hasErrors('dependence')}" th:errors="*{dependence}"></span>
+
+        <!-- Type of procedure -->
+        <p>
+            <label for="type-procedure">Tipo de trámite: </label>
+            <select th:field="*{type}" id="type-procedure">
+                <option value="0" selected>Selecciona el tipo de trámite</option>
+                <option value="NORMAL">Normal</option>
+                <option value="ESTRUCTURAL">Estructural</option>
+            </select>
+        </p>
+        <hr>
+
+        <!-- Requirements -->
+        <div class="requirements">
+            <h3>Selecciona los requisitos que se necesitan para ingresar el trámite:</h3>
+
+            <p th:each="requirement : ${requirements}">
+                <input type="checkbox" th:id="${requirement.name}" th:field="*{requirements}" th:value="${requirement.idRequirement}">
+                <label th:for="${requirement.name}" th:text="${requirement.name}"></label>
+            </p>
+            <br>
+            <span style="color: blue">Si los requisitos que necesita este trámite no se encuentra disponible, puedes agregarlo
+                <button type="button">Agregar requisito</button></span>
+        </div>
+        <br>
+        <!-- throw error -->
+        <span style="background: red; color: white;"
+              th:if="${#fields.hasErrors('requirements')}" th:errors="*{requirements}"></span>
+        <hr>
+
+        <!-- Signatures -->
+        <div id="signatures" style="display: none">
+            <h3>Selecciona las firmas que requiere este trámite:</h3>
+
+            <p th:each="signature : ${signatures}">
+                <input type="checkbox" th:id="${signature.name}" th:field="*{signatures}" th:value="${signature.idSignature}">
+                <label th:for="${signature.name}" th:text="${signature.name}"></label>
+            </p>
+            <br>
+            <span style="color: blue">Si la firma del corresponsable no se encuentra en esta lista, puedes agregarlo
+                <button type="button">Agregar firma</button></span>
+        </div>
+
+        <!-- Submit -->
+        <input type="hidden" th:field="*{idProcedure}">
+        <input type="submit" value="Guardar trámite">
+    </form>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>
