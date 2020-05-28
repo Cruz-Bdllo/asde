@@ -2,7 +2,6 @@ package com.asde.app.service;
 
 import com.asde.app.domain.Procedure;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 public interface IProcedureService {

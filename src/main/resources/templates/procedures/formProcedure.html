@@ -24,6 +24,9 @@
         <span style="background: red; color: white;"
               th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 
+        <span style="background: red; color: white;"
+              th:if="${name_duplicate != null}" th:text="${name_duplicate}"></span>
+
 
         <!-- Expiration -->
         <p>

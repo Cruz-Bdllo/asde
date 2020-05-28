@@ -1,9 +1,7 @@
 package com.asde.app.controller;
 
-import com.asde.app.domain.Dependence;
-import com.asde.app.domain.Procedure;
-import com.asde.app.domain.Requirement;
-import com.asde.app.domain.Signature;
+import com.asde.app.domain.*;
+import com.asde.app.exceptions.ProcedureNameDuplicateException;
 import com.asde.app.service.IDependenceService;
 import com.asde.app.service.IProcedureService;
 import com.asde.app.service.IRequirementService;
@@ -11,8 +9,7 @@ import com.asde.app.service.ISignatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -84,17 +81,20 @@ public class ProcedureController {
 
     // also can update
     @PostMapping("/crear")
-    public String saveProcedure (@Valid Procedure procedure, BindingResult s) {
-        if (s.hasErrors()) {
-
+    public String saveProcedure (@Valid Procedure procedure, Errors error) {
+        if (error.hasErrors()) {
             return "procedures/formProcedure";
         }
+
         procedure.setExpiration( formatExpiration(procedure.getExpiration()) );
 
-        // if exists alrady procedure
-        if(procedure.getIdProcedure() != null){
-            procedure = clearProcedureUpdate(procedure);
+        // Validation
+        if(procedure.getIdProcedure() != null){ // valid procedure to modify (procedure exist)
+            procedure = clearSignaturesIfIsNull(procedure);
+        }else{ // valid the name of new procedure do not exist
+            validIfNameProcedureExist(procedure.getName());
         }
+
         procedureRepo.saveProcedure(procedure);
 
         return "redirect:/tramites";
@@ -111,6 +111,8 @@ public class ProcedureController {
 
 
 
+
+
     /* ~    UTILITIES
     --------------------------------------------------- */
     private String formatExpiration(String date) {
@@ -119,12 +121,19 @@ public class ProcedureController {
 
     }
 
-    private Procedure clearProcedureUpdate (Procedure procedure) {
+    private Procedure clearSignaturesIfIsNull(Procedure procedure) {
         if(procedure.getType().name().equals("NORMAL"))
             procedure.setSignatures(null);
 
         return procedure;
 
+    }
+
+    private void validIfNameProcedureExist (String nameProcedure) {
+        Procedure nameDb = procedureRepo.findProcedureByName(nameProcedure.toUpperCase());
+        if (nameDb != null && nameProcedure.toUpperCase().equals(nameDb.getName())) {
+            throw new ProcedureNameDuplicateException(nameProcedure);
+        }
     }
 
 
