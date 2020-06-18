@@ -52,5 +52,32 @@ public class RepresentantController {
     }
 
 
+    @GetMapping("/eliminar/{idRepresentant}")
+    public String deleteRepresentant (@PathVariable Integer idRepresentant, Model model, RedirectAttributes notify) {
+        Representant representant = repreService.getRepresentantById(idRepresentant);
+        if (representant == null) {
+            notify.addFlashAttribute("error", "El representante no existe, pruebe con uno valido");
+            return "redirect:/clientes";
+        }
+        notify.addFlashAttribute("success", representant
+                + " se ha eliminado como representante de "+representant.getClient().getName());
+        repreService.deleteRepresentantById(idRepresentant);
+
+        return "redirect:/clientes/editar/"+representant.getClient().getRfc();
+    }
+
+
+    /* ~    ERROR HANDLER
+     --------------------------------------------------- */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String errorParameterDeleteRepresentant (Model model, RedirectAttributes notify) {
+        notify.addFlashAttribute("error", "No se ha podido eliminar al representante" +
+                " intente con uno valido");
+
+        return "redirect:/clientes";
+    }
+
+
+
 
 }

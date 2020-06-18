@@ -33,6 +33,12 @@ public class ClientService implements IClientService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Client getClientByRfc(String rfc) {
+        return clientRepo.findClientByRfc(rfc).orElse(null);
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public void saveClient(Client client) {
         clientRepo.save(client);

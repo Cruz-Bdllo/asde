@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+<header th:replace="includes/layout :: header"></header>
+
+<h1 th:text="${subtitle}"></h1>
+
+<p>
+    <button><a th:href="@{/clientes}">Regresar a mi lista de clientes</a></button>
+</p>
+
+<h2>Información General</h2>
+<p>
+    <button><a th:href="@{'/clientes/editar/'+${client.rfc}}">Modificar cliente</a></button>
+</p>
+<table style="border: 1px solid black;">
+
+    <tr>
+        <th>Estado actual</th>
+        <td th:text="${client.active}"></td>
+    </tr>
+
+    <tr>
+        <th>RFC</th>
+        <td th:text="${client.rfc}"></td>
+    </tr>
+
+    <tr>
+        <th>Razon Social</th>
+        <td th:text="${client.name}"></td>
+    </tr>
+
+    <tr>
+        <th>Correo corporativo</th>
+        <td th:text="${client.email}"></td>
+    </tr>
+
+    <tr>
+        <th>Telefono de oficina</th>
+        <td th:text="${client.phone}"></td>
+    </tr>
+
+    <tr>
+        <th>Celular personal</th>
+        <td th:text="${client.cellphone.equals('')?'Sin celular asignado':client.cellphone}"></td>
+    </tr>
+
+    <tr>
+        <th>Dirección de la empresa</th>
+        <td th:text="${client.address.equals('')?'Sin dirección asignada':client.address}"></td>
+    </tr>
+</table>
+
+<h2>Representantes autorizados por <span th:text="${client.getName()}"></span></h2>
+
+<p>
+    <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}">Asignar representante</a></button>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>RFC</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Celular</th>
+        <th>Detalles</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr th:each="representant : ${client.representants}">
+            <td th:if="${representant.rfc eq null}" th:text="'Sin RFC'"></td>
+            <td th:if="${representant.rfc != null}" th:text="${representant.rfc}"></td>
+            <td th:text="${representant}"></td>
+            <td th:text="${representant.email}"></td>
+            <td th:text="${representant.phone}"></td>
+            <td><button>detalles</button></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

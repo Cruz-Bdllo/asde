@@ -9,6 +9,10 @@ public interface IRepresentantService {
 
     List<Representant> getAllRepresentants();
 
+    Representant getRepresentantById(Integer idRepresentant);
+
     void saveRepresentant(Representant representant);
+
+    void deleteRepresentantById(Integer IdRepresentant);
 
 }

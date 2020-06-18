@@ -79,6 +79,48 @@ public class ClientController {
         return "redirect:/representantes/crear/"+client.getIdEmpresa();
     } // end formulario para guardar
 
+    @GetMapping("/detalles/{rfc}")
+    public String showDetailsClient (@PathVariable String rfc, Model model, RedirectAttributes notify) {
+        Client client = clientService.getClientByRfc(rfc);
+
+        if(client == null){
+            notify.addFlashAttribute("error", "No se encuentra el cliente con el RFC "+rfc);
+            return "redirect:/clientes";
+        }
+        model.addAttribute("title", "Detalles de "+rfc);
+        model.addAttribute("subtitle", "Detalles de "+client.getName());
+        model.addAttribute("client", client);
+
+        return "clients/details";
+    }
+
+    @GetMapping("/editar/{rfc}")
+    public String modifyClient (@PathVariable String rfc, Model model, RedirectAttributes notify) {
+        Client client = clientService.getClientByRfc(rfc);
+        if (client == null) {
+            notify.addFlashAttribute("error", "No se puede acceder al cliente con el RFC "+
+                    rfc+ " intente con uno valido");
+
+            return "redirect:/clientes";
+        }
+        model.addAttribute("title", "Modificar "+client.getName());
+        model.addAttribute("subtitle", "Modificado a "+client.getName());
+        model.addAttribute("client", client);
+
+        return "clients/formUpdate";
+    }
+
+    @PostMapping("/actualizar")
+    public String updateClient (@Valid Client client, Errors errors, RedirectAttributes notify) {
+        if (errors.hasErrors()) {
+            return "clients/formUpdate";
+        }
+        clientService.saveClient(client);
+        notify.addFlashAttribute("success", client.getName()+" se ha actualizado correctamente");
+
+        return "redirect:/clientes/editar/"+client.getRfc();
+    }
+
 
     @GetMapping("/eliminar/{idEmpresa}")
     public String deleteClient (@PathVariable Integer idEmpresa, RedirectAttributes notify) {
@@ -92,11 +134,13 @@ public class ClientController {
         return "redirect:/clientes";
     } // end delete cliente
 
+
+
     /* ~    ERROR HANDLER
      --------------------------------------------------- */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public String errorParamForDeleteProcedure(MethodArgumentTypeMismatchException ex, Model model, RedirectAttributes notify){
-        notify.addFlashAttribute("error", "No se puede eliminar al cliente, intentelo con uno valido");
+        notify.addFlashAttribute("error", "No se puede acceder al cliente, intentelo con uno valido");
 
         return "redirect:/clientes";
     }

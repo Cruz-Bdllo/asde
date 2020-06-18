@@ -21,7 +21,7 @@
                 <th>Activo</th>
                 <th>Representante</th>
                 <th>Detalles</th>
-                <th>Actualizar</th>
+                <th>Modificar</th>
                 <th>Eliminar</th>
             </tr>
 
@@ -37,8 +37,8 @@
                     <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}" th:text="'Añadir representante'"></a></button>
                 </td>
                 <td th:if="${!#lists.isEmpty(client.representants)}" th:text="${client.representants.get(0)}"></td>
-                <td>Ver perfil</td>
-                <td>Modificar</td>
+                <td><a th:href="@{'/clientes/detalles/'+${client.getRfc()}}">Ver cliente</a></td>
+                <td><a th:href="@{'/clientes/editar/'+${client.rfc}}">editar</a></td>
                 <td><a th:href="@{'/clientes/eliminar/'+${client.idEmpresa}}">Eliminar</a></td>
             </tr>
         </tbody>

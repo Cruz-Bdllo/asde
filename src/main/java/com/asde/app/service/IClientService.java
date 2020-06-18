@@ -10,6 +10,8 @@ public interface IClientService {
 
     Client getClientById(Integer idClient);
 
+    Client getClientByRfc(String rfc);
+
     void saveClient(Client client);
 
     void deleteClientById(Integer idClient);

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+    <header th:replace="includes/layout :: header"></header>
+
+    <h1 th:text="${subtitle}"></h1>
+
+    <p>Los campos con (*) deben ser llenados obligatoriamente</p>
+
+    <form th:action="@{/clientes/actualizar}" method="post" th:object="${client}">
+        <label for="rfc">RFC del cliente</label>
+        <input type="text" id="rfc" th:field="*{rfc}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('rfc')}" th:errors="*{rfc}"></span>
+        </div>
+
+        <label for="razon-social">Razón Social</label>
+        <input type="text" id="razon-social" th:field="*{name}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <label for="email">Correo corporativo</label>
+        <input type="email" id="email" th:field="*{email}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <label for="phone">Teléfono</label>
+        <input type="text" id="phone" th:field="*{phone}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        </div>
+
+        <label for="cellphone">Celular</label>
+        <input type="text" id="cellphone" th:field="*{cellphone}"><br><br>
+
+        <label for="address">Dirección</label>
+        <input type="text" id="address" th:field="*{address}"><br><br>
+
+        <input type="submit" value="Actualizar cliente">
+        <input type="hidden" th:field="*{idEmpresa}">
+    </form>
+    <p>
+        <button><a th:href="@{'/clientes'}">cancelar regresar a lista de clientes</a></button>
+        <button><a th:href="@{'/clientes/detalles/'+${client.rfc}}">cancelar regresar a los detalles</a></button>
+    </p>
+
+    <h2>Representantes asignados</h2>
+    <p>
+        <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}">Asignar representante</a></button>
+    </p>
+    <table>
+        <thead>
+        <tr>
+            <th>RFC</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Modificar</th>
+            <th>Eliminar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="representant : ${client.representants}">
+            <td th:if="${representant.rfc eq null}" th:text="'Sin RFC'"></td>
+            <td th:if="${representant.rfc != null}" th:text="${representant.rfc}"></td>
+            <td th:text="${representant}"></td>
+            <td th:text="${representant.email}"></td>
+            <td th:text="${representant.phone}"></td>
+            <td><button>editar</button></td>
+            <td><button><a th:href="@{'/representantes/eliminar/'+${representant.idRepresentant}}">eliminar</a></button></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -24,6 +24,18 @@ public class RepresentantService implements IRepresentantService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Representant getRepresentantById(Integer idRepresentant) {
+        return repreRepo.findById(idRepresentant).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void deleteRepresentantById(Integer IdRepresentant) {
+        repreRepo.deleteById(IdRepresentant);
+    }
+
+    @Override
     @Transactional(readOnly = false)
     public void saveRepresentant(Representant representant) {
         repreRepo.save(representant);

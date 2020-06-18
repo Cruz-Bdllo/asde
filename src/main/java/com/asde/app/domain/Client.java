@@ -19,10 +19,12 @@ public class Client {
     @Column(name = "id_empresa")
     private Integer idEmpresa;
 
+
     @Column(name = "rfc")
     @NotNull(message = "No puede quedar vacio el RFC")
     @NotBlank(message = "No puede quedar vacio el RFC")
     @Size(min = 10, max = 13, message = "El RFC debe contener entre 10 y 13 caracteres")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String rfc;
 
     @Column(name = "razon_social")
