@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+    <header th:replace="includes/layout :: header"></header>
+
+    <h1 th:text="${subtitle}"></h1>
+
+    <p>Llene el siguiente formulario, los campos con (*) son necesarios que los llene:</p>
+
+    <form th:action="@{/clientes/crear}" method="post" th:object="${client}">
+
+        <!-- RFC -->
+        <label for="rfc">* RFC</label>
+        <input type="text" id="rfc" th:name="${client}" th:field="*{rfc}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('rfc')}" th:errors="*{rfc}"></span>
+        </div>
+
+        <!-- Razón Social -->
+        <label for="razon-social">* Razón Social</label>
+        <input type="text" id="razon-social" th:field="*{name}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <!-- Email -->
+        <label for="email">* Correo corporativo</label>
+        <input type="email" id="email" th:field="*{email}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <!-- Phone -->
+        <label for="phone">* Teléfono corporativo</label>
+        <input type="text" id="phone" th:field="*{phone}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+        </div>
+
+        <!-- CellPhone -->
+        <label for="cellphone">Celular</label>
+        <input type="text" id="cellphone" th:field="*{cellphone}"><br><br>
+
+        <!-- Address -->
+        <label for="address">Dirección</label>
+        <input type="text" id="address" th:field="*{address}"><br><br>
+
+
+
+        <!-- RFC Representant-->
+<!--        <div>-->
+<!--            <label for="representante-rf">RFC</label>-->
+<!--            <input type="text" id="representante-rf" name="repreRfc"><br><br>-->
+
+<!--            <label for="representante-name">Nombre</label>-->
+<!--            <input type="text" id="representante-name" name="repreName"><br><br>-->
+
+<!--        </div>-->
+
+
+
+
+        <input type="submit" value="Guardar cliente">
+
+    </form>
+
+</body>
+</html>

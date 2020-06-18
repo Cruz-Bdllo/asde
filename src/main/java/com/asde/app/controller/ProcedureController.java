@@ -6,11 +6,14 @@ import com.asde.app.service.IDependenceService;
 import com.asde.app.service.IProcedureService;
 import com.asde.app.service.IRequirementService;
 import com.asde.app.service.ISignatureService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -46,9 +49,13 @@ public class ProcedureController {
 
     /* ~    MODELS
     --------------------------------------------------- */
+//    @ModelAttribute(name = "procedures")
+//    public List<Procedure> procedures () {
+//        List<Procedure> pros = procedureRepo.getAllProcedures();
+//        return pros;
+//    }
     @ModelAttribute(name = "procedures")
-    public List<Procedure> procedures () {return procedureRepo.getAllProcedures(); }
-
+    public List<Procedure> procedures() { return procedureRepo.getAllProcedures(); }
     @ModelAttribute(name = "dependencies")
     public List<Dependence> dependence () { return dependenceRepo.getAllDependecies(); }
 
@@ -68,21 +75,27 @@ public class ProcedureController {
     --------------------------------------------------- */
     @GetMapping
     public String homeProcedures (Model model) {
+        model.addAttribute("title", "Trámites");
+
         return "/procedures/homeProcedure";
     }
 
     @GetMapping("/crear")
     public String createProcedures(Model model){
         model.addAttribute("procedure", new Procedure());
-        model.addAttribute("title", "Crear un nuevo trámite");
+        model.addAttribute("title", "Nuevo trámite");
+        model.addAttribute("subtitle", "Crea un nuevo trámite");
+        model.addAttribute("types", Procedure.TYPE_P.values());
 
         return "procedures/formProcedure";
     }
 
     // also can update
     @PostMapping("/crear")
-    public String saveProcedure (@Valid Procedure procedure, Errors error) {
+    public String saveProcedure (@Valid Procedure procedure, Errors error, Model model) {
         if (error.hasErrors()) {
+            model.addAttribute("title", "Nuevo trámite");
+            model.addAttribute("subtitle", "Corrige los errores para guardaar tu trámite");
             return "procedures/formProcedure";
         }
 
@@ -110,6 +123,24 @@ public class ProcedureController {
     }
 
 
+    @GetMapping("/eliminar/{idProcedure}")
+    public String deleteProcedure (@PathVariable Integer idProcedure) {
+        Procedure procedure = procedureRepo.findProcedureById(idProcedure);
+        if (procedure != null)
+            procedureRepo.deleteProcedureById(idProcedure);
+        return "redirect:/tramites";
+    }
+
+
+    @GetMapping("/requisitos/{idProcedure}")
+    public String profileProcedure (@PathVariable Integer idProcedure, Model model) {
+        Procedure procedure = procedureRepo.findProcedureById(idProcedure);
+        model.addAttribute("title","Requisitos de trámite");
+        model.addAttribute("subtitle","Estos son los requisitos para " + procedure.getName());
+        model.addAttribute("procedure", procedure);
+
+        return "procedures/profileProcedure";
+    }
 
 
 
@@ -134,6 +165,16 @@ public class ProcedureController {
         if (nameDb != null && nameProcedure.toUpperCase().equals(nameDb.getName())) {
             throw new ProcedureNameDuplicateException(nameProcedure);
         }
+    }
+
+
+    /* ~    ERROR HANDLER
+    --------------------------------------------------- */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String errorParamForDeleteProcedure(MethodArgumentTypeMismatchException ex, Model model, RedirectAttributes notify){
+        notify.addFlashAttribute("error", "No se puede eliminar el tramite, intentelo con uno valido");
+
+        return "redirect:/tramites";
     }
 
 

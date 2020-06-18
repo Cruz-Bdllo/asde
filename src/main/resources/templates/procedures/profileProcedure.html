@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+    <header th:replace="includes/layout :: header"></header>
+
+    <h1 th:text="${subtitle}"></h1>
+
+    <p>
+        <button type="button"><a th:href="@{/tramites}">Volver a mi lista de trámites</a></button>
+    </p>
+
+    <h3>Información General</h3>
+
+    <table style="border: solid 1px black;">
+        <tr>
+            <th>ID TRAMITE</th>
+            <td th:text="${procedure.idProcedure}"></td>
+        </tr>
+
+        <tr>
+            <th>Nombre del trámite</th>
+            <td th:text="${procedure.name}"></td>
+        </tr>
+
+        <tr>
+            <th>Vigencia</th>
+            <td th:text="${procedure.expiration}"></td>
+        </tr>
+
+        <tr>
+            <th>Tipo de trámite</th>
+            <td th:text="${procedure.type.name()}"></td>
+        </tr>
+
+        <tr>
+            <th>Lugar de ingreso</th>
+            <td th:text="${procedure.dependence.name}"></td>
+        </tr>
+    </table>
+
+    <hr>
+    <h3>Requisitos al ingresar <span th:text="${procedure.name}"></span></h3>
+    <ul>
+        <li th:each="requirement : ${procedure.requirements}" th:text="${requirement.name}"></li>
+    </ul>
+
+    <hr>
+    <div th:if="${procedure.type.name().equals('ESTRUCTURAL')}">
+        <h3>Firmas de necesarias para ingresar <span th:text="${procedure.name}"></span></h3>
+        <ul>
+            <li th:each="signature : ${procedure.signatures}" th:text="${signature.name}"></li>
+        </ul>
+    </div>
+
+    <p>
+        <button type="button"><a th:href="@{'/tramites/actualizar/'+${procedure.name}}">Modificar trámite</a></button>
+    </p>
+
+</body>
+</html>

@@ -10,13 +10,13 @@ import java.util.List;
 
 @Service
 public class ProcedureService implements IProcedureService {
-    @Autowired
+
     private ProcedureRepository procedureRepo;
 
-//    @Autowired
-//    public ProcedureService (ProcedureRepository procedureRepo) {
-//        this.procedureRepo = procedureRepo;
-//    }
+    @Autowired
+    public ProcedureService (ProcedureRepository procedureRepo) {
+        this.procedureRepo = procedureRepo;
+    }
 
     @Override
     @Transactional(readOnly = true)

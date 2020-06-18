@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+    <header th:replace="includes/layout :: header"></header>
+    <h1 th:text="${subtitle}"></h1>
+
+    <form th:action="@{/representantes/crear}" method="post" th:object="${representant}">
+        <input type="text" th:value="${representant.client.rfc}" readonly="true"><br><br><br>
+
+        <label for="rfcRepre">RFC del representante (opcional):</label>
+        <input type="text" id="rfcRepre" th:field="*{rfc}"><br><br>
+
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" th:field="*{name}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        </div>
+
+        <label for="firstName">Apellido paterno:</label>
+        <input type="text" id="firstName" th:field="*{firstName}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+        </div>
+
+        <label for="lastName">Apellido Materno:</label>
+        <input type="text" id="lastName" th:field="*{lastName}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+        </div>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" th:field="*{email}"><br><br>
+        <div class="error">
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        </div>
+
+        <label for="phone">Teléfono:</label>
+        <input type="text" id="phone" th:field="*{phone}"><br><br>
+
+        <input type="hidden" th:field="*{client}">
+        <input type="submit" value="Asignar representante"><br><br>
+
+        <button><a th:href="@{'/clientes'}">Regresar a mi lista de clientes</a></button>
+
+    </form>
+</body>
+</html>

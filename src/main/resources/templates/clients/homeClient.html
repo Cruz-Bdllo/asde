@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+    <!-- Header -->
+    <header th:replace="includes/layout :: header"></header>
+
+    <h1 th:text="${subtitle}"></h1>
+
+    <p>
+        <button><a th:href="@{/clientes/crear}">Agregar nuevo cliente</a></button>
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>RFC</th>
+                <th>Razon Social</th>
+                <th>Correo</th>
+                <th>Celular</th>
+                <th>Activo</th>
+                <th>Representante</th>
+                <th>Detalles</th>
+                <th>Actualizar</th>
+                <th>Eliminar</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr th:each="client : ${clients}">
+                <td th:text="${client.rfc}"></td>
+                <td th:text="${client.name}"></td>
+                <td th:text="${client.email}"></td>
+                <td th:text="${client.cellphone}"></td>
+                <td th:text="${client.active}"></td>
+                <td th:if="${#lists.isEmpty(client.representants)}">
+                    <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}" th:text="'Añadir representante'"></a></button>
+                </td>
+                <td th:if="${!#lists.isEmpty(client.representants)}" th:text="${client.representants.get(0)}"></td>
+                <td>Ver perfil</td>
+                <td>Modificar</td>
+                <td><a th:href="@{'/clientes/eliminar/'+${client.idEmpresa}}">Eliminar</a></td>
+            </tr>
+        </tbody>
+    </table>
+<ul>
+
+</ul>
+</body>
+</html>
