@@ -41,8 +41,8 @@
         <input type="hidden" th:field="*{client}">
         <input type="submit" value="Asignar representante"><br><br>
 
-        <button><a th:href="@{'/clientes/detalles/'+${representant.client.rfc}}">Regresar</a></button>
 
     </form>
+    <button><a th:href="@{'/clientes/detalles/'+${representant.client.rfc}}">Regresar a los detalles del cliente</a></button>
 </body>
 </html>

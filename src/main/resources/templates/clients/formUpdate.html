@@ -44,7 +44,7 @@
         <input type="hidden" th:field="*{idEmpresa}">
     </form>
     <p>
-        <button><a th:href="@{'/clientes'}">cancelar regresar a lista de clientes</a></button>
+        <button><a th:href="@{/clientes}">cancelar regresar a lista de clientes</a></button>
         <button><a th:href="@{'/clientes/detalles/'+${client.rfc}}">cancelar regresar a los detalles</a></button>
     </p>
 

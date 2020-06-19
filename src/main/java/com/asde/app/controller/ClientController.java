@@ -49,7 +49,7 @@ public class ClientController {
         model.addAttribute("title", "Clientes");
         model.addAttribute("subtitle", "Lista de todos mis clientes registrados");
 
-        return "clients/homeClient";
+        return "/clients/homeClient";
     } // end clientes/
 
 
@@ -91,7 +91,7 @@ public class ClientController {
         model.addAttribute("subtitle", "Detalles de "+client.getName());
         model.addAttribute("client", client);
 
-        return "clients/details";
+        return "/clients/details";
     }
 
     @GetMapping("/editar/{rfc}")

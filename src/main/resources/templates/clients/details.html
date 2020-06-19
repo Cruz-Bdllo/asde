@@ -11,9 +11,14 @@
     <button><a th:href="@{/clientes}">Regresar a mi lista de clientes</a></button>
 </p>
 
+
+
 <h2>Información General</h2>
 <p>
     <button><a th:href="@{'/clientes/editar/'+${client.rfc}}">Modificar cliente</a></button>
+</p>
+<p>
+    <button><a target="_blank" th:href="@{'/clientes/detalles/'+${client.rfc}(format=pdf)}">Generar PDF</a></button>
 </p>
 <table style="border: 1px solid black;">
 

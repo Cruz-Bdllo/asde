@@ -77,7 +77,7 @@ public class ProcedureController {
     public String homeProcedures (Model model) {
         model.addAttribute("title", "Trámites");
 
-        return "/procedures/homeProcedure";
+        return "procedures/homeProcedure";
     }
 
     @GetMapping("/crear")

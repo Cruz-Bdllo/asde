@@ -1,4 +1,4 @@
-package com.asde.app.view.pdf;
+package com.asde.app.reports.pdf;
 
 import com.asde.app.domain.Procedure;
 import com.lowagie.text.Document;
@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Service("/procedures/homeProcedure")
+@Service("procedures/homeProcedure")
 public class ProcedureViewPdf extends AbstractPdfView {
 
     @Override
