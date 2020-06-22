@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+    <header th:replace="includes/layout :: header"></header>
+
+    <h1 th:text="${subtitle}"></h1>
+
+    <p>
+        <button><a th:href="@{/ingresos}">Regresar a mi lista de ingresos</a></button>
+    </p>
+
+    <form th:action="@{/ingresos/guardar}" method="post" th:object="${income}">
+        <label for="codIncome">Folio asignado:</label>
+        <input type="text" id="codIncome" th:field="*{codIncome}">
+        <p class="error" th:if="${#fields.hasErrors('codIncome')}" th:errors="*{codIncome}"></p>
+        <br><br>
+
+        <label for="client">Empresa a quien se realiza el trámite:</label>
+        <select  id="client" th:field="*{client}">
+            <option value="">Selecciona una empresa</option>
+            <option th:each="client : ${clients}" th:value="${client.idEmpresa}" th:text="${client.name}"></option>
+        </select>
+        <p class="error" th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></p>
+        <br><br>
+
+        <label for="procedure">Nombre del tramite ingresado:</label>
+        <select  id="procedure" th:field="*{procedure}">
+            <option value="">Selecciona una empresa</option>
+            <option th:each="procedure : ${procedures}" th:value="${procedure.idProcedure}" th:text="${procedure.name}"></option>
+        </select>
+        <p class="error" th:if="${#fields.hasErrors('procedure')}" th:errors="*{procedure}"></p>
+        <br><br>
+
+        <label for="alcaldia">Alcaldia donde se ingreso:</label>
+        <select  id="alcaldia" th:field="*{alcaldia}">
+            <option value="">Selecciona una alcaldia</option>
+            <option th:each="alcaldia : ${alcaldias}" th:value="${alcaldia.idAlcaldia}" th:text="${alcaldia.nombre}"></option>
+        </select>
+        <p class="error" th:if="${#fields.hasErrors('alcaldia')}" th:errors="*{alcaldia}"></p>
+        <br><br>
+
+        <label for="address">Dirección de la dependencia</label>
+        <input type="text" id="address" th:field="*{address}"><br><br>
+
+        <label for="dataIn">Fecha de ingreso</label>
+        <input type="date" id="dataIn" th:field="*{creatAt}">
+        <p class="error" th:if="${#fields.hasErrors('creatAt')}" th:errors="*{creatAt}"></p>
+        <br><br>
+
+        <label for="dataEnd">Fecha de entrega</label>
+<!--        <input type="text" id="dataEnd" th:field="*{endDate}"><br><br>-->
+        <input type="date" id="dataEnd" th:field="*{endDate}">
+        <p class="error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+        <br><br>
+
+        <label for="observations">Observaciones durante el trámite</label>
+        <textarea id="observations" th:field="*{observations}" cols="30" rows="10"></textarea>
+
+        <input type="submit" value="Guardar ingreso">
+    </form>
+
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

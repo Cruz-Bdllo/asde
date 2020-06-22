@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+<header th:replace="includes/layout :: header"></header>
+
+<h1 th:text="${subtitle}"></h1>
+
+<p>
+    <button><a th:href="@{/ingresos/crear}">Registrar un ingreso</a></button>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Fecha ingreso</th>
+        <th>Estado</th>
+        <th>Vigencia</th>
+        <th>Entregado</th>
+        <th>Empresa</th>
+        <th>Trámite</th>
+        <th>Alcaldia</th>
+        <th>Cambiar estado</th>
+        <th>Modificar</th>
+        <th>Detalles</th>
+        <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.isEmpty(incomes)}"><td colspan="8">Sin ingresos</td></tr>
+    <tr th:if="${!#lists.isEmpty(incomes)}" th:each="income : ${incomes}">
+        <td th:text="${formatDate.format(income.creatAt)}"></td>
+        <td th:if="${income.status.name().equals('INGRESADO') || income.status.name().equals('PREVENCION')}">Complete el trámite</td>
+        <td th:if="${income.status.name().equals('COMPLETADO')}" th:text="${income.status.name()}"></td>
+        <td th:text="${(income.expirate) ? 'Vigente':'Renovar'}"></td>
+        <td th:text="${income.delivered.name()}"></td>
+        <td th:text="${income.client.name}"></td>
+        <td th:text="${income.procedure.name}"></td>
+        <td th:text="${income.alcaldia.nombre}"></td>
+        <td><button><a th:href="@{'/ingresos/cambiar-estado/'+${income.codIncome}}">cambiar</a></button></td>
+        <td><button><a th:href="@{/ingresos}">actualizar</a></button></td>
+        <td><button><a th:href="@{/ingresos}">detalles</a></button></td>
+        <td><button><a th:href="@{'/ingresos/eliminar/'+${income.codIncome}}">eliminar</a></button></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

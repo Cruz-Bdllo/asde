@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+    <header th:replace="includes/layout :: header"></header>
+    <h1 th:text="${subtitle}"></h1>
+
+    <form th:action="@{/ingresos/guardar-estado}" method="post" th:object="${income}">
+        <label for="client">Cliente</label>
+        <input type="text" id="client" readonly="true" th:value="${income.client.name}"><br><br>
+
+        <label for="codIncome">Folio de acuse</label>
+        <input type="text" id="codIncome" readonly="true" th:value="${income.codIncome}"><br><br>
+
+        <label for="status">Estado actual</label>
+        <select id="status" th:field="*{status}">
+            <option th:each="stat : ${statues}" th:value="${stat.name()}" th:text="${stat.name()}"></option>
+        </select><br><br>
+
+        <input type="hidden" th:field="*{codIncome}">
+        <input type="submit" value="Cambiar estado">
+    </form>
+</body>
+</html>
