@@ -17,7 +17,6 @@
         <th>Fecha ingreso</th>
         <th>Estado</th>
         <th>Vigencia</th>
-        <th>Entregado</th>
         <th>Empresa</th>
         <th>Trámite</th>
         <th>Alcaldia</th>
@@ -31,17 +30,22 @@
     <tr th:if="${#lists.isEmpty(incomes)}"><td colspan="8">Sin ingresos</td></tr>
     <tr th:if="${!#lists.isEmpty(incomes)}" th:each="income : ${incomes}">
         <td th:text="${formatDate.format(income.creatAt)}"></td>
-        <td th:if="${income.status.name().equals('INGRESADO') || income.status.name().equals('PREVENCION')}">Complete el trámite</td>
-        <td th:if="${income.status.name().equals('COMPLETADO')}" th:text="${income.status.name()}"></td>
-        <td th:text="${(income.expirate) ? 'Vigente':'Renovar'}"></td>
-        <td th:text="${income.delivered.name()}"></td>
+
+        <td th:text="${income.status.name()}"></td>
+
+        <td th:if="${income.status.name().equals('INGRESADO')}" th:text="'N/A (apenas ingresado)'"></td>
+        <td th:if="${income.status.name().equals('PREVENCION')}" th:text="'N/A (tiene prevención)'"></td>
+        <td th:if="${income.status.name().equals('COMPLETADO') && income.getProcedure().expiration.equals('permanente')}" th:text="'Permanente'"></td>
+        <td th:if="${income.status.name().equals('COMPLETADO') && !income.getProcedure().expiration.equals('permanente')}" th:text="${(income.expirate) ? 'Vigente':'Renovar'}"></td>
+
+
         <td th:text="${income.client.name}"></td>
         <td th:text="${income.procedure.name}"></td>
         <td th:text="${income.alcaldia.nombre}"></td>
-        <td><button><a th:href="@{'/ingresos/cambiar-estado/'+${income.codIncome}}">cambiar</a></button></td>
-        <td><button><a th:href="@{/ingresos}">actualizar</a></button></td>
-        <td><button><a th:href="@{/ingresos}">detalles</a></button></td>
-        <td><button><a th:href="@{'/ingresos/eliminar/'+${income.codIncome}}">eliminar</a></button></td>
+        <td><button><a th:href="@{'/ingresos/cambiar-estado/'+${income.codIncome.replace('/','_')}}">cambiar</a></button></td>
+        <td><button><a th:href="@{'/ingresos/actualizar/'+${income.codIncome.replace('/','_')}}">actualizar</a></button></td>
+        <td><button><a th:href="@{'/ingresos/detalles/'+${income.codIncome.replace('/','_')}}">detalles</a></button></td>
+        <td><button><a th:href="@{'/ingresos/eliminar/'+${income.codIncome.replace('/','_')}}">eliminar</a></button></td>
     </tr>
     </tbody>
 </table>

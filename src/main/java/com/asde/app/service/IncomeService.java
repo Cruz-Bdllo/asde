@@ -25,6 +25,12 @@ public class IncomeService implements IIncomeService{
 
     @Override
     @Transactional(readOnly = true)
+    public Income getIncomeById(Integer idIncome) {
+        return incomeRepo.getIncomeByIdIncome(idIncome).orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Income getIncomeByCodIncome(String codIncome) {
         return incomeRepo.getIncomeByCodIncome(codIncome).orElse(null);
     }

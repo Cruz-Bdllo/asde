@@ -6,6 +6,10 @@
     <header th:replace="includes/layout :: header"></header>
     <h1 th:text="${subtitle}"></h1>
 
+    <p>
+        <button><a th:href="@{/ingresos}">Regresar a mi lista de ingresos</a></button>
+    </p>
+
     <form th:action="@{/ingresos/guardar-estado}" method="post" th:object="${income}">
         <label for="client">Cliente</label>
         <input type="text" id="client" readonly="true" th:value="${income.client.name}"><br><br>

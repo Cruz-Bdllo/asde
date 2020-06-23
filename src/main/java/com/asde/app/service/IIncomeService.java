@@ -10,6 +10,8 @@ public interface IIncomeService {
 
     Income getIncomeByCodIncome(String codIncome);
 
+    Income getIncomeById(Integer idIncome);
+
     void saveIncome(Income income);
 
     void deleteIncomeById(Integer idIncome);

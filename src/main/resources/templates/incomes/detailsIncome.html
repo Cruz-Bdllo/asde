@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+    <header th:replace="includes/layout :: header"></header>
+
+    <h1 th:text="${subtitle}"></h1>
+
+    <p>
+        <button><a th:href="@{/ingresos}">Regresar a mi lista de ingresos</a></button>
+    </p>
+
+
+    <p>
+        <button><a th:href="@{'/ingresos/actualizar/'+${income.getCodIncome()}}">Modificar este ingreso</a></button>
+    </p>
+
+
+    <table>
+        <tr>
+            <th>Estado del proceso</th>
+            <td th:text="${income.status.name()}"></td>
+        </tr>
+        <tr>
+            <th>Folio de ingreso</th>
+            <td th:text="${income.codIncome}"></td>
+        </tr>
+        <tr>
+            <th>Empresa que lo solicito</th>
+            <td th:text="${income.client.name}+' ('+${income.client.rfc}+')'"></td>
+        </tr>
+
+        <tr>
+            <th>Trámite ingresado</th>
+            <td th:text="${income.procedure.name}"></td>
+        </tr>
+
+        <tr>
+            <th>Fecha de ingreso</th>
+            <td th:text="${formatDate.format(income.creatAt)}"></td>
+        </tr>
+
+        <tr>
+            <th>Fecha de entrega</th>
+            <td th:text="${formatDate.format(income.endDate)}"></td>
+        </tr>
+
+        <tr>
+            <th>Vigencia</th>
+            <td th:if="${income.expirateDate == null}" th:text="'No se ha recogido el tramite o tiene alguna prevención'"></td>
+            <td th:if="${income.expirateDate != null}" th:text="${(income.status.name().equals('COMPLETADO')) ? formatDate.format(income.expirateDate)
+                : 'Aun no se ha recogido el tramite o tiene alguna prevención'}"></td>
+        </tr>
+
+        <tr>
+            <th>Dirección de ingreso</th>
+            <td th:text="${(income.address eq null || income.address.equals('')) ? income.alcaldia.nombre :
+            income.address + ', alcaldia '+income.alcaldia.nombre}"></td>
+        </tr>
+
+
+        <tr>
+            <th>Observaciones durante el ingreso</th>
+            <td th:text="${(income.observations eq null || income.observations.equals('')) ? 'Sin observaciones' :
+            income.observations}"></td>
+        </tr>
+    </table>
+
+</body>
+</html>
