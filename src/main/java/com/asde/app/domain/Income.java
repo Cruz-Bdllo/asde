@@ -3,6 +3,8 @@ package com.asde.app.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+
+import javax.validation.Constraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
@@ -17,7 +19,7 @@ public class Income {
     @Column(name = "id_ingreso")
     private Integer idIncome;
 
-    @Column(name = "folio")
+    @Column(name = "folio", unique = true)
     @NotNull(message = "El folio del acuse es necesario")
     @NotBlank(message = "El folio del acuse es necesario")
     private String codIncome;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -89,6 +90,12 @@ public class IncomeController {
             income = calcDateExpiration(income);
 
         }else { // nuevo ingreso
+            Income incomeDb = incomeService.getIncomeByCodIncome(income.getCodIncome());
+            if( incomeDb != null ){
+                model.addAttribute("error_duplicate", "El folio ya existe");
+
+                return "/incomes/formIncome";
+            }
             income.setStatus(Income.TYPE_STATUS.INGRESADO);
             income.setDelivered(Income.TYPE_DELIVERED.NO_ENTREGADO);
         }

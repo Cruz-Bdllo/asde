@@ -15,6 +15,7 @@
         <label for="codIncome">Folio asignado:</label>
         <input type="text" id="codIncome" th:field="*{codIncome}">
         <p class="error" th:if="${#fields.hasErrors('codIncome')}" th:errors="*{codIncome}"></p>
+        <p class="error" th:if="${error_duplicate != null}" th:text="${error_duplicate}"></p>
         <br><br>
 
         <label for="client">Empresa a quien se realiza el trámite:</label>
