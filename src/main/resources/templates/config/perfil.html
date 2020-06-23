@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="includes/layout :: head"></head>
+<body>
+
+    <header th:replace="includes/layout :: header"></header>
+
+    <table>
+        <tr>
+            <th>RFC</th>
+            <td th:text="${asde.rfc}"></td>
+        </tr>
+    </table>
+</body>
+</html>
