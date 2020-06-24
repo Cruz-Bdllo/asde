@@ -55,8 +55,8 @@
 
         <tr>
             <th>Dirección de ingreso</th>
-            <td th:text="${(income.address eq null || income.address.equals('')) ? income.alcaldia.nombre :
-            income.address + ', alcaldia '+income.alcaldia.nombre}"></td>
+            <td th:text="${(income.address eq null || income.address.equals('')) ? income.alcaldia.name :
+            income.address + ', alcaldia '+income.alcaldia.name}"></td>
         </tr>
 
 

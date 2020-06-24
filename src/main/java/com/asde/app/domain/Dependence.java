@@ -3,8 +3,12 @@ package com.asde.app.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
+
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>dependencias</b> en la BD, con el fin de poder
+ * representar los datos de una <i>dependencia</i>.
+ */
 @Entity
 @Table(name = "dependencias")
 public class Dependence implements Serializable {

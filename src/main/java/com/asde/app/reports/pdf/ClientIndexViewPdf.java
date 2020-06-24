@@ -16,8 +16,12 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase de servicio que muestra a través de la plantilla <b>/clients/homeClient</b> su formato en PDF, con el fin
+ * de que el usuario pueda imprimir el contenido de la lista de clientes.
+ */
 @Service("/clients/homeClient")
-public class ClientViewPdf extends AbstractPdfView {
+public class ClientIndexViewPdf extends AbstractPdfView {
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document,

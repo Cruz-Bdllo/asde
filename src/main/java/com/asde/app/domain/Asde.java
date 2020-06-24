@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>asde</b> en la BD, con el fin de poder
+ * representar los datos de la empresa.
+ */
 @Entity
 @Table(name = "asde")
 public class Asde {
@@ -29,6 +33,9 @@ public class Asde {
 
     @Column(name = "giro")
     private String giro;
+
+    public Asde() {
+    }
 
     public String getRfc() {
         return rfc;

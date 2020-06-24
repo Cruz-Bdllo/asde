@@ -5,7 +5,6 @@ import com.asde.app.domain.Representant;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfCell;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
@@ -17,8 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.util.Map;
 
+/**
+ * Clase de servicio que muestra a través de la plantilla <b>/clients/details</b> su formato en PDF, con el fin
+ * de que el usuario pueda imprimir el contenido de los detalles de cierto cliente.
+ */
 @Service("/clients/details")
-public class ClientDetailsPdf extends AbstractPdfView {
+public class ClientDetailsViewPdf extends AbstractPdfView {
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,

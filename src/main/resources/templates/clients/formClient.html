@@ -16,6 +16,7 @@
         <input type="text" id="rfc" th:name="${client}" th:field="*{rfc}"><br><br>
         <div class="error">
             <span th:if="${#fields.hasErrors('rfc')}" th:errors="*{rfc}"></span>
+            <span th:if="${error_duplicate != null}" th:text="${error_duplicate}"></span>
         </div>
 
         <!-- Razón Social -->

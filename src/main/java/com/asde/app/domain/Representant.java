@@ -3,9 +3,12 @@ package com.asde.app.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
+
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>representantes</b> en la BD, con el fin de poder
+ * representar los datos de los <b>representantes</b> legales permitidos por una empresa cliente.
+ */
 @Entity
 @Table(name = "representantes")
 public class Representant {

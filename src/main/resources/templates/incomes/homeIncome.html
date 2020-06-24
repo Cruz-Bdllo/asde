@@ -45,7 +45,7 @@
 
         <td th:text="${income.client.name}"></td>
         <td th:text="${income.procedure.name}"></td>
-        <td th:text="${income.alcaldia.nombre}"></td>
+        <td th:text="${income.alcaldia.name}"></td>
         <td><button><a th:href="@{'/ingresos/cambiar-estado/'+${income.codIncome.replace('/','_')}}">cambiar</a></button></td>
         <td><button><a th:href="@{'/ingresos/actualizar/'+${income.codIncome.replace('/','_')}}">actualizar</a></button></td>
         <td><button><a th:href="@{'/ingresos/detalles/'+${income.codIncome.replace('/','_')}}">detalles</a></button></td>

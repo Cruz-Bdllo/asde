@@ -19,8 +19,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase de servicio que muestra a través de la plantilla <b>procedures/homeProcedure</b> su formato en PDF, con el fin
+ * de que el usuario pueda imprimir el contenido de la lista de todos los tramites registrados.
+ */
 @Service("procedures/homeProcedure")
-public class ProcedureViewPdf extends AbstractPdfView {
+public class ProcedureIndexViewPdf extends AbstractPdfView {
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document,

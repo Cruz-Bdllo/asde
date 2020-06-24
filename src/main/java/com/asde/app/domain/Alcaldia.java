@@ -2,6 +2,10 @@ package com.asde.app.domain;
 
 import javax.persistence.*;
 
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>alcaldias</b> en la BD, con el fin de poder
+ * representar los datos de una <i>alcaldia</i>.
+ */
 @Entity
 @Table(name = "alcaldias")
 public class Alcaldia {
@@ -10,7 +14,8 @@ public class Alcaldia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAlcaldia;
 
-    private String nombre;
+    @Column(name = "nombre")
+    private String name;
 
     public Alcaldia() {
     }
@@ -23,11 +28,11 @@ public class Alcaldia {
         this.idAlcaldia = idAlcaldia;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String nombre) {
+        this.name = nombre;
     }
 } // end of class domain

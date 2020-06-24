@@ -3,6 +3,11 @@ package com.asde.app.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
+
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>requisitos</b> en la BD, con el fin de poder
+ * representar los <i>requisitos</i> que requiere un trámite para poder ser ingresado.
+ */
 @Entity
 @Table(name = "requisitos")
 public class Requirement implements Serializable {
@@ -25,12 +30,6 @@ public class Requirement implements Serializable {
     /* ~    METHODS
     --------------------------------------------------- */
     public Requirement(){}
-
-    public Requirement(Integer idRequirement, String name, String observations) {
-        this.idRequirement = idRequirement;
-        this.name = name;
-        this.observations = observations;
-    }
 
     public Integer getIdRequirement() {
         return idRequirement;

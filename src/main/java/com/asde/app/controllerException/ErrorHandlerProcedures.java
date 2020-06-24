@@ -3,10 +3,10 @@ package com.asde.app.controllerException;
 
 import com.asde.app.domain.*;
 import com.asde.app.exceptions.ProcedureNameDuplicateException;
-import com.asde.app.service.IDependenceService;
-import com.asde.app.service.IProcedureService;
-import com.asde.app.service.IRequirementService;
-import com.asde.app.service.ISignatureService;
+import com.asde.app.service.dependence.IDependenceService;
+import com.asde.app.service.procedure.IProcedureService;
+import com.asde.app.service.requirement.IRequirementService;
+import com.asde.app.service.signature.ISignatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

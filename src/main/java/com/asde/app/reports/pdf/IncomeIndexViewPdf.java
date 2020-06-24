@@ -16,8 +16,12 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Clase de servicio que muestra a través de la plantilla <b>/incomes/homeIncome</b> su formato en PDF, con el fin
+ * de que el usuario pueda imprimir el contenido de la lista de todos los ingresos de trámites que ha realizado.
+ */
 @Service("/incomes/homeIncome")
-public class IncomeHomePdf extends AbstractPdfView {
+public class IncomeIndexViewPdf extends AbstractPdfView {
 
     @Override
     protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter writer,

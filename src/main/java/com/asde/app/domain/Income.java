@@ -11,6 +11,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>ingresos</b> en la BD, con el fin de poder
+ * representar los datos de los tramites <i>ingresados</i>.
+ */
 @Entity
 @Table(name = "ingresos")
 public class Income {

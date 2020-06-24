@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>tramites</b> en la BD, con el fin de poder
+ * representar los datos de un servicio que se puede <i>tramitar</i>.
+ */
 @Entity
 @Table(name = "tramites")
 public class Procedure implements Serializable {
@@ -63,16 +68,6 @@ public class Procedure implements Serializable {
     public Procedure(){
         this.requirements=new ArrayList<>();
         this.signatures=new ArrayList<>();
-    }
-
-    public Procedure(Integer idProcedure, String name, String expiration, TYPE_P type, Dependence dependence) {
-        this.requirements=new ArrayList<>();
-        this.signatures=new ArrayList<>();
-        this.idProcedure = idProcedure;
-        this.name = name;
-        this.expiration = expiration;
-        this.type = type;
-        this.dependence = dependence;
     }
 
     public Integer getIdProcedure() {

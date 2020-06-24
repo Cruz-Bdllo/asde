@@ -3,6 +3,11 @@ package com.asde.app.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 
+
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>firmas</b> en la BD, con el fin de poder
+ * representar las <i>firmas</i> que requiere un trámite para poder ser ingresado.
+ */
 @Entity
 @Table(name = "firmas")
 public class Signature implements Serializable {
@@ -25,12 +30,6 @@ public class Signature implements Serializable {
     /* ~    METHODS
     --------------------------------------------------- */
     public Signature(){}
-
-    public Signature(Integer idSignature, String name, String observations) {
-        this.idSignature = idSignature;
-        this.name = name;
-        this.observations = observations;
-    }
 
     public Integer getIdSignature() {
         return idSignature;

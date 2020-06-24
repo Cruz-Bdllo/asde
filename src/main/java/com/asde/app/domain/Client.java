@@ -1,6 +1,5 @@
 package com.asde.app.domain;
 
-import net.bytebuddy.implementation.bind.annotation.Empty;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -8,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Clase que permite mapear sus propiedades a los campos de la tabla <b>empresa</b> en la BD, con el fin de poder
+ * representar los datos de los <i>clientes</i>.
+ */
 @Entity
 @Table(name = "empresa")
 public class Client {
@@ -58,7 +61,6 @@ public class Client {
     @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Representant> representants;
 
-//    private Representant representant;
 
     public static enum ACTIVE_T {
         INACTIVO, ACTIVO

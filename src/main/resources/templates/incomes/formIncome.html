@@ -37,7 +37,7 @@
         <label for="alcaldia">Alcaldia donde se ingreso:</label>
         <select  id="alcaldia" th:field="*{alcaldia}">
             <option value="">Selecciona una alcaldia</option>
-            <option th:each="alcaldia : ${alcaldias}" th:value="${alcaldia.idAlcaldia}" th:text="${alcaldia.nombre}"></option>
+            <option th:each="alcaldia : ${alcaldias}" th:value="${alcaldia.idAlcaldia}" th:text="${alcaldia.name}"></option>
         </select>
         <p class="error" th:if="${#fields.hasErrors('alcaldia')}" th:errors="*{alcaldia}"></p>
         <br><br>
