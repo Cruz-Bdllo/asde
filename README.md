@@ -92,4 +92,42 @@ Por medio de la entrevista con el cliente y la recolección de información podr
 ![useCase][use-case]
 
 
+
+## Diseño
+En esta fase se realizar el documento SDD (Software Design Description) apoyado del estandar IEEE 1016, en el cual se cubren 4 temas:
+- Diseño de la arquitectura.
+- Diseño de las interfaces.
+- Diseño de la estructura de datos.
+- Diseño de los componentes.
+
+### Diseño de la arquitectura
+Para este proyecto como arquitectura de sistema se opta por elegir **cliente-servidor** ya que mediante este podrá acceder a sus recursos por medio de HTTPS donde quiera que el usuario se encuentre, teniendo como beneficio la disponibilidad.
+Esta arquitectura nos permite la separación de la capa de presentación a las capas de la lógica de negocio y la de acceso a datos.
+![clientServer][client-server]
+
+Como patron de diseño arquitectonico se usara MVC (Modelo-Vista-Controlador) que hace una analogia con la arquitectura en capas:
+![mvc][design-mvc]
+Con el usuario podrá:
+- solicitar algún recurso.
+- Procesar la solicitud por medio del controlador.
+- Consultar datos.
+- Comunicarse con la BD.
+- Responder la solicitud con una vista.
+
+### Diseño de las interfaces
+Definimos como los componentes se comunicaran entre si, para ellos utilizaremos diagramas de implementación:
+- Diagrama de componentes.
+![component][component-diagram]
+- Diagrama de despliegue.
+![d-deploy][deploy-diagram]
+- Menu UI
+![menu][menu-ui]
+
+
+
 [use-case]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/use_case.png "Diagram Use Case"
+[client-server]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/client_server.png "Design MVC"
+[design-mvc]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/mvc.png "Design MVC"
+[component-diagram]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/component_diagram.png "Component Diagram"
+[deploy-diagram]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/d_deploy.png "Deploy Diagram"
+[menu-ui]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/menu.png "Mnue UI"
