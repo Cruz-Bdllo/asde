@@ -128,6 +128,16 @@ Definimos como los componentes se comunicaran entre si, para ellos utilizaremos 
 - Diseño del menu de navegación.
 ![menu-d][design-menu]
 
+### Modulo de clientes
+- Home - Lista de clientes.
+![home-c][home-clientes]
+- Vista - Detalles.
+![details-c][details-cliente]
+- Notificación - eliminar.
+![delete-c][delete-cliente]
+- Validación - cliente.
+![validate-c][validate-cliente]
+
 
 [use-case]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/use_case.png "Diagram Use Case"
 [client-server]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/client_server.png "Design MVC"
@@ -136,3 +146,7 @@ Definimos como los componentes se comunicaran entre si, para ellos utilizaremos 
 [deploy-diagram]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/d_deploy.png "Deploy Diagram"
 [menu-ui]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/menu.png "Menu UI"
 [design-menu]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/design-menu.png "Menu Design"
+[home-clientes]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/home_client.png "Home clientes"
+[details-cliente]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/detail_client.png "Details clientes"
+[delete-cliente]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/confirm_delete_client.png "Confirm clientes"
+[validate-cliente]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/save_repre.png "Validate clientes"

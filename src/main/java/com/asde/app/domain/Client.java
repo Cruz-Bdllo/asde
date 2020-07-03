@@ -37,6 +37,7 @@ public class Client {
 
     @Column(name = "correo")
     @Email(message = "El campo correo debe tener un formato adecuado (puede que le falte @ o .)")
+    @NotBlank(message = "El campo correo debe ser llenado y tener un formato adecuado (incluya @ o .)")
     private String email;
 
     @Column(name = "telefono")

@@ -3,56 +3,64 @@
 <head th:replace="includes/layout :: head"></head>
 <body>
 
-<header th:replace="includes/layout :: header"></header>
+    <header th:replace="includes/layout :: menu"></header>
 
-<h1 th:text="${subtitle}"></h1>
+                <h1 th:text="${subtitle}"></h1>
 
-<p>
-    <button><a th:href="@{/ingresos/crear}">Registrar un ingreso</a></button>
-</p>
+                <p>
+                    <button><a th:href="@{/ingresos/crear}">Registrar un ingreso</a></button>
+                </p>
 
-<p>
-    <button><a th:href="@{/ingresos(format=pdf)}" target="_blank">Generar PDF</a></button>
-</p>
+                <p>
+                    <button><a th:href="@{/ingresos(format=pdf)}" target="_blank">Generar PDF</a></button>
+                </p>
 
-<table>
-    <thead>
-    <tr>
-        <th>Fecha ingreso</th>
-        <th>Estado</th>
-        <th>Vigencia</th>
-        <th>Empresa</th>
-        <th>Trámite</th>
-        <th>Alcaldia</th>
-        <th>Cambiar estado</th>
-        <th>Modificar</th>
-        <th>Detalles</th>
-        <th>Eliminar</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${#lists.isEmpty(incomes)}"><td colspan="8">Sin ingresos</td></tr>
-    <tr th:if="${!#lists.isEmpty(incomes)}" th:each="income : ${incomes}">
-        <td th:text="${formatDate.format(income.creatAt)}"></td>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Fecha ingreso</th>
+                        <th>Estado</th>
+                        <th>Vigencia</th>
+                        <th>Empresa</th>
+                        <th>Trámite</th>
+                        <th>Alcaldia</th>
+                        <th>Cambiar estado</th>
+                        <th>Modificar</th>
+                        <th>Detalles</th>
+                        <th>Eliminar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(incomes)}"><td colspan="8">Sin ingresos</td></tr>
+                    <tr th:if="${!#lists.isEmpty(incomes)}" th:each="income : ${incomes}">
+                        <td th:text="${formatDate.format(income.creatAt)}"></td>
 
-        <td th:text="${income.status.name()}"></td>
+                        <td th:text="${income.status.name()}"></td>
 
-        <td th:if="${income.status.name().equals('INGRESADO')}" th:text="'N/A (apenas ingresado)'"></td>
-        <td th:if="${income.status.name().equals('PREVENCION')}" th:text="'N/A (tiene prevención)'"></td>
-        <td th:if="${income.status.name().equals('COMPLETADO') && income.getProcedure().expiration.equals('permanente')}" th:text="'Permanente'"></td>
-        <td th:if="${income.status.name().equals('COMPLETADO') && !income.getProcedure().expiration.equals('permanente')}" th:text="${(income.expirate) ? 'Vigente':'Renovar'}"></td>
+                        <td th:if="${income.status.name().equals('INGRESADO')}" th:text="'N/A (apenas ingresado)'"></td>
+                        <td th:if="${income.status.name().equals('PREVENCION')}" th:text="'N/A (tiene prevención)'"></td>
+                        <td th:if="${income.status.name().equals('COMPLETADO') && income.getProcedure().expiration.equals('permanente')}" th:text="'Permanente'"></td>
+                        <td th:if="${income.status.name().equals('COMPLETADO') && !income.getProcedure().expiration.equals('permanente')}" th:text="${(income.expirate) ? 'Vigente':'Renovar'}"></td>
 
 
-        <td th:text="${income.client.name}"></td>
-        <td th:text="${income.procedure.name}"></td>
-        <td th:text="${income.alcaldia.name}"></td>
-        <td><button><a th:href="@{'/ingresos/cambiar-estado/'+${income.codIncome.replace('/','_')}}">cambiar</a></button></td>
-        <td><button><a th:href="@{'/ingresos/actualizar/'+${income.codIncome.replace('/','_')}}">actualizar</a></button></td>
-        <td><button><a th:href="@{'/ingresos/detalles/'+${income.codIncome.replace('/','_')}}">detalles</a></button></td>
-        <td><button><a th:href="@{'/ingresos/eliminar/'+${income.codIncome.replace('/','_')}}">eliminar</a></button></td>
-    </tr>
-    </tbody>
-</table>
+                        <td th:text="${income.client.name}"></td>
+                        <td th:text="${income.procedure.name}"></td>
+                        <td th:text="${income.alcaldia.name}"></td>
+                        <td><button><a th:href="@{'/ingresos/cambiar-estado/'+${income.codIncome.replace('/','_')}}">cambiar</a></button></td>
+                        <td><button><a th:href="@{'/ingresos/actualizar/'+${income.codIncome.replace('/','_')}}">actualizar</a></button></td>
+                        <td><button><a th:href="@{'/ingresos/detalles/'+${income.codIncome.replace('/','_')}}">detalles</a></button></td>
+                        <td><button><a th:href="@{'/ingresos/eliminar/'+${income.codIncome.replace('/','_')}}">eliminar</a></button></td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
 
+    <script th:fragment="jquery-b" src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script th:fragment="popper" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script th:fragment="jbootstrap" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script th:fragment="app" th:src="@{/js/app.js}"></script>
 </body>
 </html>

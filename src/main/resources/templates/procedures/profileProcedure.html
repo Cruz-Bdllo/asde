@@ -2,60 +2,68 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/layout :: head"></head>
 <body>
-    <header th:replace="includes/layout :: header"></header>
+    <header th:replace="includes/layout :: menu"></header>
 
-    <h1 th:text="${subtitle}"></h1>
+                    <h1 th:text="${subtitle}"></h1>
 
-    <p>
-        <button type="button"><a th:href="@{/tramites}">Volver a mi lista de trámites</a></button>
-    </p>
+                    <p>
+                        <button type="button"><a th:href="@{/tramites}">Volver a mi lista de trámites</a></button>
+                    </p>
 
-    <h3>Información General</h3>
+                    <h3>Información General</h3>
 
-    <table style="border: solid 1px black;">
-        <tr>
-            <th>ID TRAMITE</th>
-            <td th:text="${procedure.idProcedure}"></td>
-        </tr>
+                    <table style="border: solid 1px black;">
+                        <tr>
+                            <th>ID TRAMITE</th>
+                            <td th:text="${procedure.idProcedure}"></td>
+                        </tr>
 
-        <tr>
-            <th>Nombre del trámite</th>
-            <td th:text="${procedure.name}"></td>
-        </tr>
+                        <tr>
+                            <th>Nombre del trámite</th>
+                            <td th:text="${procedure.name}"></td>
+                        </tr>
 
-        <tr>
-            <th>Vigencia</th>
-            <td th:text="${procedure.expiration}"></td>
-        </tr>
+                        <tr>
+                            <th>Vigencia</th>
+                            <td th:text="${procedure.expiration}"></td>
+                        </tr>
 
-        <tr>
-            <th>Tipo de trámite</th>
-            <td th:text="${procedure.type.name()}"></td>
-        </tr>
+                        <tr>
+                            <th>Tipo de trámite</th>
+                            <td th:text="${procedure.type.name()}"></td>
+                        </tr>
 
-        <tr>
-            <th>Lugar de ingreso</th>
-            <td th:text="${procedure.dependence.name}"></td>
-        </tr>
-    </table>
+                        <tr>
+                            <th>Lugar de ingreso</th>
+                            <td th:text="${procedure.dependence.name}"></td>
+                        </tr>
+                    </table>
 
-    <hr>
-    <h3>Requisitos al ingresar <span th:text="${procedure.name}"></span></h3>
-    <ul>
-        <li th:each="requirement : ${procedure.requirements}" th:text="${requirement.name}"></li>
-    </ul>
+                    <hr>
+                    <h3>Requisitos al ingresar <span th:text="${procedure.name}"></span></h3>
+                    <ul>
+                        <li th:each="requirement : ${procedure.requirements}" th:text="${requirement.name}"></li>
+                    </ul>
 
-    <hr>
-    <div th:if="${procedure.type.name().equals('ESTRUCTURAL')}">
-        <h3>Firmas de necesarias para ingresar <span th:text="${procedure.name}"></span></h3>
-        <ul>
-            <li th:each="signature : ${procedure.signatures}" th:text="${signature.name}"></li>
-        </ul>
-    </div>
+                    <hr>
+                    <div th:if="${procedure.type.name().equals('ESTRUCTURAL')}">
+                        <h3>Firmas de necesarias para ingresar <span th:text="${procedure.name}"></span></h3>
+                        <ul>
+                            <li th:each="signature : ${procedure.signatures}" th:text="${signature.name}"></li>
+                        </ul>
+                    </div>
 
-    <p>
-        <button type="button"><a th:href="@{'/tramites/actualizar/'+${procedure.name}}">Modificar trámite</a></button>
-    </p>
+                    <p>
+                        <button type="button"><a th:href="@{'/tramites/actualizar/'+${procedure.name}}">Modificar trámite</a></button>
+                    </p>
+                </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
 
+    <script th:fragment="jquery-b" src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script th:fragment="popper" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script th:fragment="jbootstrap" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script th:fragment="app" th:src="@{/js/app.js}"></script>
 </body>
 </html>

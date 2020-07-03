@@ -54,7 +54,8 @@ public class ClientController {
     @ModelAttribute(name = "clients")
     public List<Client> clients() { return clientService.getAllClients(); }
 
-
+    @ModelAttribute(name = "estados")
+    public Client.ACTIVE_T[] estados() { return Client.ACTIVE_T.values(); }
 
 
     /* ~    CONTROLLERS
@@ -69,7 +70,7 @@ public class ClientController {
     @GetMapping
     public String clientIndex(Model model) {
         model.addAttribute("title", "Clientes");
-        model.addAttribute("subtitle", "Lista de todos mis clientes registrados");
+        model.addAttribute("subtitle", "Mi lista de clientes");
 
         return "/clients/homeClient";
     } // end clientes/
@@ -84,7 +85,7 @@ public class ClientController {
     @GetMapping("/crear")
     public String formNewClient(Model model) {
         model.addAttribute("title", "Nuevo Cliente");
-        model.addAttribute("subtitle", "Agregue a un nuevo cliente");
+        model.addAttribute("subtitle", "Registrando nuevo cliente");
         model.addAttribute("client", new Client());
 
         return "clients/formClient";
@@ -104,16 +105,16 @@ public class ClientController {
     public String saveClient(@Valid Client client, Errors errors, RedirectAttributes msjHeader, Model model) {
         if(errors.hasErrors()) { // redirigir al formulario para solucionar sus errores
             model.addAttribute("title", "Nuevo Cliente");
-            model.addAttribute("subtitle", "Corrija los siguientes campos para crear al nuevo usuario");
+            model.addAttribute("subtitle", "Corrija los siguientes campos para registrar al cliente");
 
             return "clients/formClient";
         } // end if to validation and redirect
 
         client.setActive(Client.ACTIVE_T.ACTIVO); // Set your state to active
         if(clientService.getClientByRfc(client.getRfc()) != null) {
-            model.addAttribute("error_duplicate", "El cliente con el RFC "
+            model.addAttribute("error_duplicate", "El RFC "
                     .concat(client.getRfc())
-                    .concat(" ya existe, intente con otro."));
+                    .concat(" ya esta asignado a un cliente, intente con otro"));
             return "clients/formClient";
         }
         clientService.saveClient(client);         // Save client
@@ -143,7 +144,7 @@ public class ClientController {
         } // end if validate
 
         model.addAttribute("title", "Detalles de "+rfc);
-        model.addAttribute("subtitle", "Detalles de "+client.getName());
+        model.addAttribute("subtitle", client.getName() +" ("+client.getRfc()+")");
         model.addAttribute("client", client);
 
         return "/clients/details";
@@ -188,6 +189,8 @@ public class ClientController {
         if (errors.hasErrors()) {
             return "clients/formUpdate";
         }
+
+        client.setRepresentants(clientService.getClientByRfc(client.getRfc()).getRepresentants());
         clientService.saveClient(client);
         msnHeader.addFlashAttribute("success", client.getName()+" se ha actualizado correctamente");
 

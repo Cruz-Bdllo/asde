@@ -3,88 +3,176 @@
 <head th:replace="includes/layout :: head"></head>
 <body>
 
-<header th:replace="includes/layout :: header"></header>
+    <div th:replace="includes/layout :: menu"></div>
+                    <!-- Contenido detalles -->
+                    <div class="bg-content">
+                        <h2 th:text="${subtitle}" class="mb-3"></h2>
 
-<h1 th:text="${subtitle}"></h1>
+                        <!-- Botones de regreso -->
+                        <div class="mb-3 mt-5 d-flex">
+                            <a th:href="@{/clientes}" class="btn btn-primary">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M5.854 5.646a.5.5 0 0 1 0 .708L3.207 9l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                                    <path fill-rule="evenodd" d="M13.5 2.5a.5.5 0 0 1 .5.5v4a2.5 2.5 0 0 1-2.5 2.5H3a.5.5 0 0 1 0-1h8.5A1.5 1.5 0 0 0 13 7V3a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                                 Regresar a mi lista de clientes
+                            </a>
 
-<p>
-    <button><a th:href="@{/clientes}">Regresar a mi lista de clientes</a></button>
-</p>
+                            <a th:href="@{'/clientes/detalles/'+${client.rfc}(format=pdf)}" class="btn btn-danger ml-auto" target="_blank">
+                                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-file-earmark-text mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 1h5v1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6h1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z"/>
+                                    <path d="M9 4.5V1l5 5h-3.5A1.5 1.5 0 0 1 9 4.5z"/>
+                                    <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                                </svg>
+                                Generar PDF
+                            </a>
+                        </div> <!-- fin de botones para regreso y reporte -->
+
+                        <!-- información general -->
+                        <div class="info-personal mt-4">
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-3 bg-info-no-image d-flex">
+                                        <!--<img th:if="${client.}" th:src="" alt="">-->
+                                        <h2 class="text-center align-self-center text-center col-12"
+                                            th:text="${client.rfc.substring(0,2).toUpperCase().toString()}"></h2>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body">
+                                            <!--<h5>Card title</h5>-->
+                                            <h2 class="card-title">Información General
+                                                <a th:href="@{'/clientes/editar/'+${client.rfc}}" class="btn btn-warning ml-3">
+                                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                                    </svg>
+                                                     Modificar
+                                                </a>
+                                            </h2>
+                                            <!-- Tabla de información personal -->
+                                            <table class="table">
+
+                                                <tr>
+                                                    <th>Estado actual</th>
+                                                    <td>
+                                                        <span th:text="${client.active.name()}" class="badge"
+                                                              th:classappend="${(client.active.name().equals('ACTIVO'))
+                                                    ?'badge-success':'badge-danger'}"></span>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>RFC</th>
+                                                    <td th:text="${client.rfc}"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Razon Social</th>
+                                                    <td th:text="${client.name}"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Correo corporativo</th>
+                                                    <td th:text="${client.email}"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Telefono de oficina</th>
+                                                    <td th:text="${client.phone}"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Celular personal</th>
+                                                    <td th:text="${client.cellphone.equals('')?'Sin celular asignado':client.cellphone}"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th>Dirección de la empresa</th>
+                                                    <td th:text="${client.address.equals('')?'Sin dirección asignada':client.address}"></td>
+                                                </tr>
+                                            </table> <!-- fin de tabla información personal -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
+                        </div><!-- fin información general -->
+                    </div> <!-- fin de contenido detalles -->
 
-<h2>Información General</h2>
-<p>
-    <button><a th:href="@{'/clientes/editar/'+${client.rfc}}">Modificar cliente</a></button>
-</p>
-<p>
-    <button><a target="_blank" th:href="@{'/clientes/detalles/'+${client.rfc}(format=pdf)}">Generar PDF</a></button>
-</p>
-<table style="border: 1px solid black;">
+                    <!-- Contenido para los representantes -->
+                    <div class="bg-content">
+                        <h3>Representantes autorizados por <span th:text="${client.getName()}"></span></h3>
+                        <a th:href="@{'/representantes/crear/'+${client.idEmpresa}}" class="btn btn-success mt-4">
+                            <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-person-plus mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                            </svg>
+                             Asignar representante
+                        </a>
 
-    <tr>
-        <th>Estado actual</th>
-        <td th:text="${client.active}"></td>
-    </tr>
+                        <!-- Tabla de representantes -->
 
-    <tr>
-        <th>RFC</th>
-        <td th:text="${client.rfc}"></td>
-    </tr>
+                        <table class="table table-responsive-sm mt-3 text-center">
+                            <thead class="table-secondary">
+                            <tr>
+                                <th>RFC</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Celular</th>
+                                <th>Detalles</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:if="${#lists.isEmpty(client.representants)}">
+                                <td colspan="7">No se ha asignado a ningun representante, agregue uno</td>
+                            </tr>
+                            <tr th:if="${!#lists.isEmpty(client.representants)}" th:each="representant : ${client.representants}"
+                                th:id="${representant.idRepresentant}">
+                                <td th:text="${(#strings.isEmpty(representant.rfc))?'Sin RFC':representant.rfc}"></td>
+                                <td th:text="${representant}"></td>
+                                <td th:text="${representant.email}"></td>
+                                <td th:text="${representant.phone}"></td>
+                                <td>
+                                    <button type="button" id="btn-view-representant" class="btn btn-table btn-table-view" data-toggle="modal"
+                                        data-target="#view-representant">
+                                        <i class="icon ion-md-eye"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" id="btn-update-representant" class="btn btn-table btn-table-edit" data-toggle="modal"
+                                            data-target="#update-representant">
+                                        <i class="icon ion-md-create"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <a href="" id="btn-delete-repre" class="btn btn-table btn-table-danger">
+                                        <i class="icon ion-md-trash lead"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table> <!-- fin table de representantes -->
+                    </div>
 
-    <tr>
-        <th>Razon Social</th>
-        <td th:text="${client.name}"></td>
-    </tr>
+                    <!-- Modals -->
+                    <div th:replace="includes/modalRepresentant :: modal-view-representant"></div>
+                    <div th:replace="includes/modalRepresentant :: modal-update-representant"></div>
 
-    <tr>
-        <th>Correo corporativo</th>
-        <td th:text="${client.email}"></td>
-    </tr>
+                </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
+    </div> <!-- Fin del contenido general -->
 
-    <tr>
-        <th>Telefono de oficina</th>
-        <td th:text="${client.phone}"></td>
-    </tr>
-
-    <tr>
-        <th>Celular personal</th>
-        <td th:text="${client.cellphone.equals('')?'Sin celular asignado':client.cellphone}"></td>
-    </tr>
-
-    <tr>
-        <th>Dirección de la empresa</th>
-        <td th:text="${client.address.equals('')?'Sin dirección asignada':client.address}"></td>
-    </tr>
-</table>
-
-<h2>Representantes autorizados por <span th:text="${client.getName()}"></span></h2>
-
-<p>
-    <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}">Asignar representante</a></button>
-</p>
-
-<table>
-    <thead>
-    <tr>
-        <th>RFC</th>
-        <th>Nombre</th>
-        <th>Correo</th>
-        <th>Celular</th>
-        <th>Detalles</th>
-    </tr>
-    </thead>
-    <tbody>
-        <tr th:each="representant : ${client.representants}">
-            <td th:if="${representant.rfc eq null}" th:text="'Sin RFC'"></td>
-            <td th:if="${representant.rfc != null}" th:text="${representant.rfc}"></td>
-            <td th:text="${representant}"></td>
-            <td th:text="${representant.email}"></td>
-            <td th:text="${representant.phone}"></td>
-            <td><button>detalles</button></td>
-        </tr>
-    </tbody>
-</table>
+    <!-- scripts -->
+    <script th:replace="includes/layoutScript :: jquery"></script>
+    <script th:replace="includes/layoutScript :: popper"></script>
+    <script th:replace="includes/layoutScript :: jbootstrap"></script>
+    <script th:replace="includes/layoutScript :: alert"></script>
+    <script th:replace="includes/layoutScript :: requestAjax"></script>
 
 </body>
 </html>

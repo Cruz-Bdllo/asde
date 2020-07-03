@@ -1,0 +1,94 @@
+<div th:fragment="modal-view-representant" class="modal fade" id="view-representant" tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title-modal">Detalles</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody id="table-data-repre">
+                        <tr>
+                            <th>RFC</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Correo</th>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>Celular</th>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para actualizar representante -->
+<div th:fragment="modal-update-representant" class="modal fade" id="update-representant" tabindex="-1"
+     role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title-modal">Actualizar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+
+                <form id="form-update-representant">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="rfc" id="rfc-repre" placeholder="RFC">
+
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" id="nombre-repre" placeholder="Nombre(s)" required>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" name="firstName" id="apeP-repre" placeholder="Apellido Paterno" required>
+
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" name="lastName" id="apeM-repre" placeholder="Apellido Materno" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="email" class="form-control" name="email" id="email-repre" placeholder="correo@example.com" required>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="phone" id="phone-repre" placeholder="Teléfono">
+                    </div>
+
+                    <div class="d-flex mt-4 text-center">
+                        <input type="hidden" id="idrepre" name="idRepresentant">
+                        <button type="submit" class="btn btn-success" id="btn-upt-repre"><i class="icon ion-md-save"></i> Guardar</button>
+                        <button type="button" class="btn btn-danger ml-auto" data-dismiss="modal">Cancelar</button>
+                    </div> <!-- fin de botones de envio y cancelación -->
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

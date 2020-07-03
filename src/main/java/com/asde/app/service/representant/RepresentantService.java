@@ -44,6 +44,12 @@ public class RepresentantService implements IRepresentantService {
          return (List<Representant>) repreRepo.findAll();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existRepresentantByRFC(String rfc) {
+        Representant repre = repreRepo.findRepresentantByRfc(rfc).orElse(null);
+        return (repre != null) ? true : false;
+    }
 
     /**
      * Método que extrae de la BD un registro en especifico por medio de su clave de identificación única generada por

@@ -3,27 +3,36 @@
 <head th:replace="includes/layout :: head"></head>
 <body>
 
-    <header th:replace="includes/layout :: header"></header>
-    <h1 th:text="${subtitle}"></h1>
+    <header th:replace="includes/layout :: menu"></header>
+                    <h1 th:text="${subtitle}"></h1>
 
-    <p>
-        <button><a th:href="@{/ingresos}">Regresar a mi lista de ingresos</a></button>
-    </p>
+                    <p>
+                        <button><a th:href="@{/ingresos}">Regresar a mi lista de ingresos</a></button>
+                    </p>
 
-    <form th:action="@{/ingresos/guardar-estado}" method="post" th:object="${income}">
-        <label for="client">Cliente</label>
-        <input type="text" id="client" readonly="true" th:value="${income.client.name}"><br><br>
+                    <form th:action="@{/ingresos/guardar-estado}" method="post" th:object="${income}">
+                        <label for="client">Cliente</label>
+                        <input type="text" id="client" readonly="true" th:value="${income.client.name}"><br><br>
 
-        <label for="codIncome">Folio de acuse</label>
-        <input type="text" id="codIncome" readonly="true" th:value="${income.codIncome}"><br><br>
+                        <label for="codIncome">Folio de acuse</label>
+                        <input type="text" id="codIncome" readonly="true" th:value="${income.codIncome}"><br><br>
 
-        <label for="status">Estado actual</label>
-        <select id="status" th:field="*{status}">
-            <option th:each="stat : ${statues}" th:value="${stat.name()}" th:text="${stat.name()}"></option>
-        </select><br><br>
+                        <label for="status">Estado actual</label>
+                        <select id="status" th:field="*{status}">
+                            <option th:each="stat : ${statues}" th:value="${stat.name()}" th:text="${stat.name()}"></option>
+                        </select><br><br>
 
-        <input type="hidden" th:field="*{codIncome}">
-        <input type="submit" value="Cambiar estado">
-    </form>
+                        <input type="hidden" th:field="*{codIncome}">
+                        <input type="submit" value="Cambiar estado">
+                    </form>
+                </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
+
+    <script th:fragment="jquery-b" src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script th:fragment="popper" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script th:fragment="jbootstrap" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script th:fragment="app" th:src="@{/js/app.js}"></script>
 </body>
 </html>

@@ -88,7 +88,11 @@ public class ClientIndexViewPdf extends AbstractPdfView {
             cellData.setPhrase(new Phrase(client.getEmail(), fontData));
             tableBody.addCell(cellData);
 
-            cellData.setPhrase(new Phrase(client.getRepresentants().get(0).toString(), fontData));
+            if( client.getRepresentants().isEmpty() ){
+                cellData.setPhrase(new Phrase("Sin representantes asignados", fontData));
+            }else{
+                cellData.setPhrase(new Phrase(client.getRepresentants().get(0).toString(), fontData));
+            }
             tableBody.addCell(cellData);
 
             cellData.setPhrase(new Phrase(client.getPhone(), fontData));

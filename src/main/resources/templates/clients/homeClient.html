@@ -3,52 +3,145 @@
 <head th:replace="includes/layout :: head"></head>
 <body>
     <!-- Header -->
-    <header th:replace="includes/layout :: header"></header>
+    <div th:replace="includes/layout :: menu"></div>
+                        <!-- Contenido principal (caja en blanco) -->
+                        <div class="bg-content">
 
-    <h1 th:text="${subtitle}"></h1>
+                            <h1 th:text="${subtitle}" class="mb-3"></h1>
 
-    <p>
-        <button><a th:href="@{/clientes/crear}">Agregar nuevo cliente</a></button>
-    </p>
+                            <div class="mb-3 mt-5 d-flex">
+                                <a th:href="@{/clientes/crear}" class="btn btn-success">
+                                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-person-plus mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                                        <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                                    </svg>
+                                     Nuevo cliente
+                                </a>
+                                <a th:href="@{/clientes(format=pdf)}" class="btn btn-danger ml-auto" target="_blank">
+                                    <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-file-earmark-text mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 1h5v1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6h1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z"/>
+                                        <path d="M9 4.5V1l5 5h-3.5A1.5 1.5 0 0 1 9 4.5z"/>
+                                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+                                    </svg>
+                                     Generar PDF
+                                </a>
 
-    <p>
-        <button><a target="_blank" th:href="@{/clientes(format=pdf)}">Generar PDF</a></button>
-    </p>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table text-center">
+                                    <!-- Cabecera -->
+                                    <thead class="thead table-primary">
+                                    <tr class="text-center border-bottom-0">
+                                        <th>RFC</th>
+                                        <th>Razon Social</th>
+                                        <th>Correo</th>
+                                        <th>Celular</th>
+                                        <th>Activo</th>
+                                        <th>Representante</th>
+                                        <th>Detalles</th>
+                                        <th>Modificar</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                    </thead>
+                                    <!-- Cuerpo -->
+                                    <tbody>
+                                    <!-- Fila -->
+                                    <tr th:if="${#lists.isEmpty(clients)}"><td colspan="9">
+                                        <span><strong>Aun no se han creado clientes</strong></span>
+                                    </tr>
+                                    <tr th:if="${!#lists.isEmpty(client)}" th:each="client : ${clients}"
+                                        th:id="${client.rfc}" class="text-color-table">
+                                        <th class="align-middle"><span th:text="${client.rfc}"></span></th>
+                                        <td class="align-middle" th:text="${client.name}"></td>
+                                        <td class="align-middle" th:text="${client.email}"></td>
+                                        <td class="align-middle" th:text="${client.cellphone}"></td>
+                                        <td class="align-middle">
+                                            <span th:text="${(client.active eq null)?'INACTIVO':client.active.name()}" class="badge"
+                                                  th:classappend="${(client.active.name().equals('ACTIVO'))
+                                                    ?'badge-success':'badge-danger'}"></span>
+                                        </td>
 
-    <table>
-        <thead>
-            <tr>
-                <th>RFC</th>
-                <th>Razon Social</th>
-                <th>Correo</th>
-                <th>Celular</th>
-                <th>Activo</th>
-                <th>Representante</th>
-                <th>Detalles</th>
-                <th>Modificar</th>
-                <th>Eliminar</th>
-            </tr>
+                                        <td th:if="${#lists.isEmpty(client.representants)}" class="align-middle">
+                                            <a th:href="@{'/representantes/crear/'+${client.idEmpresa}}"
+                                               class="btn btn-table btn-table-add"><i class="icon ion-md-add"> Asignar</i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle" th:if="${!#lists.isEmpty(client.representants)}"
+                                            th:text="${client.representants.get(0)}"></td>
+                                        <td class="align-middle">
+                                            <a th:href="@{'/clientes/detalles/'+${client.getRfc()}}" class="btn btn-table btn-table-view">
+                                                <i class="icon ion-md-eye"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a th:href="@{'/clientes/editar/'+${client.rfc}}" class="btn btn-table btn-table-edit">
+                                                <i class="icon ion-md-create"></i>
+                                            </a>
+                                        </td>
+                                        <td class="align-middle">
+                                            <a href="" id="btn-delete-client" class="btn btn-table btn-table-danger">
+                                                <i class="icon ion-md-trash lead"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                        </li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
 
-        </thead>
-        <tbody>
-            <tr th:each="client : ${clients}">
-                <td th:text="${client.rfc}"></td>
-                <td th:text="${client.name}"></td>
-                <td th:text="${client.email}"></td>
-                <td th:text="${client.cellphone}"></td>
-                <td th:text="${client.active}"></td>
-                <td th:if="${#lists.isEmpty(client.representants)}">
-                    <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}" th:text="'Añadir representante'"></a></button>
-                </td>
-                <td th:if="${!#lists.isEmpty(client.representants)}" th:text="${client.representants.get(0)}"></td>
-                <td><a th:href="@{'/clientes/detalles/'+${client.getRfc()}}">Ver cliente</a></td>
-                <td><a th:href="@{'/clientes/editar/'+${client.rfc}}">editar</a></td>
-                <td><a th:href="@{'/clientes/eliminar/'+${client.idEmpresa}}">Eliminar</a></td>
-            </tr>
-        </tbody>
-    </table>
-<ul>
+                        </div> <!-- fin bg-content -->
 
-</ul>
+
+
+                </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
+    </div> <!-- Fin del contenido general -->
+
+    <!-- scripts -->
+    <script th:replace="includes/layoutScript :: jquery"></script>
+    <script th:replace="includes/layoutScript :: popper"></script>
+    <script th:replace="includes/layoutScript :: jbootstrap"></script>
+    <script th:replace="includes/layoutScript :: alert"></script>
+    <script th:replace="includes/layoutScript :: requestAjax"></script>
+    <script>
+        btnDeleteClient = document.querySelectorAll("#btn-delete-client");
+        btnDeleteClient.forEach(btnClient => {
+            btnClient.addEventListener("click", (e) => {
+                e.preventDefault();
+                const rfc = btnClient.parentElement.parentElement.getAttribute("id");
+
+
+
+                swal({
+                    title: "Confirmación",
+                    text: "Desea eliminar al cliente con RFC "+rfc+"?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            window.location.href="http://localhost:8080/clientes/eliminar/"+rfc;
+                        } else {
+
+                        }
+                    });
+            });
+        });
+    </script>
 </body>
 </html>
