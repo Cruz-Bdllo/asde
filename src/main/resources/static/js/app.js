@@ -1,3 +1,7 @@
+$("#menu-toggle").click(function(e){
+    e.preventDefault();
+    $("#content-wrapper").toggleClass("toggled")
+});
 let typeProcedure = document.getElementById("type-procedure");
 
 document.getElementById("signatures").style.display =
@@ -18,3 +22,5 @@ expiration.addEventListener("change", () => {
    document.getElementById("expiration-date").style.display =
        (expiration.checked) ? "none" : "block";
 });
+
+

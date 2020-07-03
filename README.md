@@ -121,8 +121,12 @@ Definimos como los componentes se comunicaran entre si, para ellos utilizaremos 
 - Diagrama de despliegue.
 ![d-deploy][deploy-diagram]
 - Menu UI
+
 ![menu][menu-ui]
 
+## Desarrollo
+- Diseño del menu de navegación.
+![menu-d][design-menu]
 
 
 [use-case]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/use_case.png "Diagram Use Case"
@@ -130,4 +134,5 @@ Definimos como los componentes se comunicaran entre si, para ellos utilizaremos 
 [design-mvc]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/mvc.png "Design MVC"
 [component-diagram]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/component_diagram.png "Component Diagram"
 [deploy-diagram]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/d_deploy.png "Deploy Diagram"
-[menu-ui]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/menu.png "Mnue UI"
+[menu-ui]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/menu.png "Menu UI"
+[design-menu]: https://raw.githubusercontent.com/Cruz-Bdllo/asde/master/img-readme/design-menu.png "Menu Design"
