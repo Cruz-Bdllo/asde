@@ -3,78 +3,167 @@
 <head th:replace="includes/layout :: head"></head>
 <body>
 
-    <header th:replace="includes/layout :: header"></header>
+    <header th:replace="includes/layout :: menu"></header>
+                <!-- Contenido -->
+                <div class="bg-content">
+                    <h2 th:text="${subtitle}" class="mb-3"></h2>
 
-    <h1 th:text="${subtitle}"></h1>
+                    <!-- Mensaje de alerta -->
+                    <div class="alert alert-primary mt-5 mb-4 text-center" role="alert">
+                        Llene el siguiente formulario, los campos con <strong>(*)</strong> son obligatorios:
+                    </div> <!-- fin del mensaje de alerta -->
 
-    <p>Los campos con (*) deben ser llenados obligatoriamente</p>
+                    <!-- Formulario -->
+                    <form th:action="@{/clientes/actualizar}" method="post" th:object="${client}">
 
-    <form th:action="@{/clientes/actualizar}" method="post" th:object="${client}">
-        <label for="rfc">RFC del cliente</label>
-        <input type="text" id="rfc" th:field="*{rfc}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('rfc')}" th:errors="*{rfc}"></span>
-        </div>
+                        <!-- Cambiar estado -->
+                        <label class="mb-1 mt-3 mr-2" for="estado">Estado del cliente
+                            <small class="form-text text-muted">Si deshabilita al cliente no podrá generarle cotizaciones.</small>
+                        </label>
+                        <select class="custom-select my-1 mr-sm-2" id="estado" th:field="*{active}">
+                            <option th:each="estado : ${estados}" th:value="${estado.name()}" th:text="${estado.name()}"></option>
+                        </select> <!-- fin de cambio de estado -->
 
-        <label for="razon-social">Razón Social</label>
-        <input type="text" id="razon-social" th:field="*{name}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-        </div>
+                        <!-- RFC y Razon social -->
+                        <div class="row mt-3">
+                            <!-- RFC -->
+                            <div class="col-12 col-md-6">
+                                <label for="rfc">* RFC</label>
+                                <input type="text" id="rfc" th:name="${client}" th:field="*{rfc}"
+                                       class="form-control">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('rfc')}" th:errors="*{rfc}"></span>
+                                </div>
+                            </div>
+                            <!-- Razon social-->
+                            <div class="col-12 col-md-6">
+                                <label for="razon-social">* Razón Social</label>
+                                <input type="text" id="razon-social" th:field="*{name}" class="form-control">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                                </div>
 
-        <label for="email">Correo corporativo</label>
-        <input type="email" id="email" th:field="*{email}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        </div>
+                            </div>
+                        </div> <!-- fin de RFC y Razón Social -->
 
-        <label for="phone">Teléfono</label>
-        <input type="text" id="phone" th:field="*{phone}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
-        </div>
+                        <!-- Correo -->
+                        <div class="form-group mt-3">
+                            <label for="email">* Correo empresarial</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}">
+                            <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                            </div>
+                        </div> <!-- fin de correo -->
 
-        <label for="cellphone">Celular</label>
-        <input type="text" id="cellphone" th:field="*{cellphone}"><br><br>
+                        <!-- Teléfono y celular -->
+                        <div class="row mt-2">
+                            <!-- Teléfono -->
+                            <div class="col-12 col-md-6">
+                                <label for="phone">* Teléfono empresarial</label>
+                                <input type="text" id="phone" th:field="*{phone}"
+                                       class="form-control">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+                                </div>
+                            </div>
+                            <!-- Celular-->
+                            <div class="col-12 col-md-6">
+                                <label for="cellphone">Celular</label>
+                                <input type="text" id="cellphone" th:field="*{cellphone}" class="form-control">
 
-        <label for="address">Dirección</label>
-        <input type="text" id="address" th:field="*{address}"><br><br>
+                            </div>
+                        </div> <!-- fin de telefono y celular -->
 
-        <input type="submit" value="Actualizar cliente">
-        <input type="hidden" th:field="*{idEmpresa}">
-    </form>
-    <p>
-        <button><a th:href="@{/clientes}">cancelar regresar a lista de clientes</a></button>
-        <button><a th:href="@{'/clientes/detalles/'+${client.rfc}}">cancelar regresar a los detalles</a></button>
-    </p>
+                        <!-- Dirección -->
+                        <div class="form-group mt-3">
+                            <label for="address">Dirección</label>
+                            <input type="text" id="address" th:field="*{address}" class="form-control">
+                        </div> <!-- fin de la dirección -->
 
-    <h2>Representantes asignados</h2>
-    <p>
-        <button><a th:href="@{'/representantes/crear/'+${client.idEmpresa}}">Asignar representante</a></button>
-    </p>
-    <table>
-        <thead>
-        <tr>
-            <th>RFC</th>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Teléfono</th>
-            <th>Modificar</th>
-            <th>Eliminar</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="representant : ${client.representants}">
-            <td th:if="${representant.rfc eq null}" th:text="'Sin RFC'"></td>
-            <td th:if="${representant.rfc != null}" th:text="${representant.rfc}"></td>
-            <td th:text="${representant}"></td>
-            <td th:text="${representant.email}"></td>
-            <td th:text="${representant.phone}"></td>
-            <td><button>editar</button></td>
-            <td><button><a th:href="@{'/representantes/eliminar/'+${representant.idRepresentant}}">eliminar</a></button></td>
-        </tr>
-        </tbody>
-    </table>
+                        <!-- Botones de envio y cancelación -->
+                        <div class="d-flex mt-5">
+                            <button type="submit" class="btn btn-success"><i class="icon ion-md-save"></i> Guardar</button>
+                            <a th:href="@{/clientes}" class="btn btn-danger ml-auto"><i class="icon ion-md-close"></i> Cancelar (lista)</a>
+                            <a th:href="@{'/clientes/detalles/'+${client.rfc}}" class="btn btn-danger ml-3"><i class="icon ion-md-close"></i> Cancelar (detalles)</a>
+                            <input type="hidden" th:field="*{idEmpresa}">
+                        </div> <!-- fin de botones de envio y cancelación -->
+                    </form> <!-- Fin del formulario -->
 
+                </div> <!-- fin del contenido -->
+
+
+                <div class="bg-content">
+                    <h3>Representantes asignados</h3>
+
+                    <!-- Asignar a representante -->
+                    <a th:href="@{'/representantes/crear/'+${client.idEmpresa}}" class="btn btn-success mt-4">
+                        <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-person-plus mb-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M11 14s1 0 1-1-1-4-6-4-6 3-6 4 1 1 1 1h10zm-9.995-.944v-.002.002zM1.022 13h9.956a.274.274 0 0 0 .014-.002l.008-.002c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664a1.05 1.05 0 0 0 .022.004zm9.974.056v-.002.002zM6 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm4.5 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                            <path fill-rule="evenodd" d="M13 7.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0v-2z"/>
+                        </svg>
+                        Asignar representante
+                    </a> <!-- fin de boton para asignar -->
+
+                    <!-- Table de representantes -->
+                    <table class="table table-responsive-sm mt-3 text-center">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th>RFC</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Celular</th>
+                            <th>Detalles</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:if="${#lists.isEmpty(client.representants)}">
+                            <td colspan="7">No se ha asignado a ningun representante, agregue uno</td>
+                        </tr>
+                        <tr th:if="${!#lists.isEmpty(client.representants)}"
+                            th:each="representant : ${client.representants}" th:id="${representant.idRepresentant}">
+                            <td th:text="${(#strings.isEmpty(representant.rfc))?'Sin RFC':representant.rfc}"></td>
+                            <td th:text="${representant}"></td>
+                            <td th:text="${representant.email}"></td>
+                            <td th:text="${representant.phone}"></td>
+                            <td>
+                                <button type="button" id="btn-view-representant" class="btn btn-table btn-table-view" data-toggle="modal"
+                                        data-target="#view-representant">
+                                    <i class="icon ion-md-eye"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" id="btn-update-representant" class="btn btn-table btn-table-edit" data-toggle="modal"
+                                        data-target="#update-representant">
+                                    <i class="icon ion-md-create"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <a th:href="@{'/representantes/eliminar/'+${representant.idRepresentant}}" id="btn-delete-repre" class="btn btn-table btn-table-danger">
+                                    <i class="icon ion-md-trash lead"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table> <!-- fin table de representantes -->
+                </div> <!-- fin del bg-content -->
+
+                <!-- Modals -->
+                <div th:replace="includes/modalRepresentant :: modal-view-representant"></div>
+                <div th:replace="includes/modalRepresentant :: modal-update-representant"></div>
+
+                </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
+    </div> <!-- Fin del contenido general -->
+
+    <!-- scripts -->
+    <script th:replace="includes/layoutScript :: jquery"></script>
+    <script th:replace="includes/layoutScript :: popper"></script>
+    <script th:replace="includes/layoutScript :: jbootstrap"></script>
+    <script th:replace="includes/layoutScript :: alert"></script>
+    <script th:replace="includes/layoutScript :: requestAjax"></script>
 </body>
 </html>

@@ -3,6 +3,9 @@ package com.asde.app.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 
 /**
@@ -11,7 +14,7 @@ import javax.validation.constraints.NotBlank;
  */
 @Entity
 @Table(name = "representantes")
-public class Representant {
+public class Representant implements Serializable {
     private static long serialVersionUID = 123L;
 
     /* ~    PROPERTIES
@@ -26,16 +29,13 @@ public class Representant {
 
     @Column(name = "nombre")
     @NotBlank(message = "El nombre del representante no puede quedar vacio")
-    @NotBlank(message = "El nombre del representante no puede quedar vacio")
     private String name;
 
     @Column(name = "apaterno")
     @NotBlank(message = "El apellido paterno del representante no puede quedar vacio")
-    @NotBlank(message = "El apellido paterno del representante no puede quedar vacio")
     private String firstName;
 
     @Column(name = "amaterno")
-    @NotBlank(message = "El apellido materno del representante no puede quedar vacio")
     @NotBlank(message = "El apellido materno del representante no puede quedar vacio")
     private String lastName;
 

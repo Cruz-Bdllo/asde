@@ -22,6 +22,14 @@ public interface IRepresentantService {
 
     /**
      * Obtendrá un registro en especifico definido en su parámetro y este sera el id auto generado por la BD.
+     * @param rfc Integer Identificador único a buscar.
+     * @return Objeto de la entidad {@link Representant}.
+     */
+    boolean existRepresentantByRFC(String rfc);
+
+
+    /**
+     * Obtendrá un registro en especifico definido en su parámetro y este sera el id auto generado por la BD.
      * @param idRepresentant Integer Identificador único a buscar.
      * @return Objeto de la entidad {@link Representant}.
      */

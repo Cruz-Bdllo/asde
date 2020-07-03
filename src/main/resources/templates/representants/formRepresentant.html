@@ -2,47 +2,118 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="includes/layout :: head"></head>
 <body>
-    <header th:replace="includes/layout :: header"></header>
-    <h1 th:text="${subtitle}"></h1>
+    <!-- Menu de navegación -->
+    <header th:replace="includes/layout :: menu"></header>
+                <!-- Contenedor General -->
+                <div class="bg-content">
+                    <!-- Titulo -->
+                    <h2 th:text="${subtitle}" class="mb-3"></h2>
 
-    <form th:action="@{/representantes/crear}" method="post" th:object="${representant}">
-        <input type="text" th:value="${representant.client.rfc}" readonly="true"><br><br><br>
+                    <div class="alert alert-primary mt-5 mb-4 text-center" role="alert">
+                        Llene el siguiente formulario, los campos con <strong>(*)</strong> son obligatorios:
+                    </div>
 
-        <label for="rfcRepre">RFC del representante (opcional):</label>
-        <input type="text" id="rfcRepre" th:field="*{rfc}"><br><br>
+                    <!-- Botones de regreso -->
+                    <a th:href="@{/clientes}" class="btn btn-primary mb-3 mt-5">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-return-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.854 5.646a.5.5 0 0 1 0 .708L3.207 9l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z"/>
+                            <path fill-rule="evenodd" d="M13.5 2.5a.5.5 0 0 1 .5.5v4a2.5 2.5 0 0 1-2.5 2.5H3a.5.5 0 0 1 0-1h8.5A1.5 1.5 0 0 0 13 7V3a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                        Regresar a mi lista de clientes
+                    </a>
 
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" th:field="*{name}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-        </div>
+                    <!-- Formulario -->
+                    <form th:action="@{/representantes/crear}" method="post" th:object="${representant}">
+                        <!-- RFC y Razon social inmutable -->
+                        <div class="row mt-3">
+                            <!-- Razon social -->
+                            <div class="col-12 col-md-6">
+                                <label >Razón Social</label>
+                                <input type="text" class="form-control" th:value="${representant.client.name}" readonly="true">
+                            </div>
+                            <!-- RFC -->
+                            <div class="col-12 col-md-6">
+                                <label >RFC</label>
+                                <input type="text" class="form-control" th:value="${representant.client.rfc}" readonly="true">
+                            </div>
+                        </div> <!-- fin rfc y razon social -->
+                        <hr>
 
-        <label for="firstName">Apellido paterno:</label>
-        <input type="text" id="firstName" th:field="*{firstName}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-        </div>
+                        <!-- Nombre y RFC del representante -->
+                        <div class="row mt-3">
+                            <!-- Nombre -->
+                            <div class="col-12 col-md-6">
+                                <label for="name">* Nombre del representante:</label>
+                                <input type="text" class="form-control" id="name" th:field="*{name}">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                                </div>
+                            </div>
 
-        <label for="lastName">Apellido Materno:</label>
-        <input type="text" id="lastName" th:field="*{lastName}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-        </div>
+                            <!-- RFC del representante -->
+                            <div class="col-12 col-md-6">
+                                <label for="rfcRepre">RFC del representante <string>(opcional)</string>:</label>
+                                <input type="text" class="form-control" id="rfcRepre" th:field="*{rfc}">
+                            </div>
+                        </div><!-- fin nombre y rfc -->
 
-        <label for="email">Correo electrónico:</label>
-        <input type="email" id="email" th:field="*{email}"><br><br>
-        <div class="error">
-            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-        </div>
+                        <!-- Apellidos del representante -->
+                        <div class="row mt-3">
+                            <!-- Apellido paterno -->
+                            <div class="col-12 col-md-6">
+                                <label for="firstName">* Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+                                </div>
+                            </div>
 
-        <label for="phone">Teléfono:</label>
-        <input type="text" id="phone" th:field="*{phone}"><br><br>
+                            <!-- RFC del representante -->
+                            <div class="col-12 col-md-6">
+                                <label for="lastName">* Apellido Materno:</label>
+                                <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+                                </div>
+                            </div>
+                        </div><!-- fin apellidos -->
 
-        <input type="hidden" th:field="*{client}">
-        <input type="submit" value="Asignar representante"><br><br>
+                        <!-- correo y telefono del representante -->
+                        <div class="row mt-3">
+                            <!-- correo -->
+                            <div class="col-12 col-md-6">
+                                <label for="email">* Correo electrónico:</label>
+                                <input type="email" class="form-control" id="email" th:field="*{email}">
+                                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                </div>
+                            </div>
 
+                            <!-- telefono -->
+                            <div class="col-12 col-md-6">
+                                <label for="phone">Teléfono:</label>
+                                <input type="text" class="form-control" id="phone" th:field="*{phone}">
+                            </div>
+                        </div><!-- fin apellidos -->
 
-    </form>
-    <button><a th:href="@{'/clientes/detalles/'+${representant.client.rfc}}">Regresar a los detalles del cliente</a></button>
+                        <div class="d-flex mt-5">
+                            <input type="hidden" th:field="*{client}">
+                            <button type="submit" class="btn btn-success"><i class="icon ion-md-save"></i> Guardar</button>
+                            <a th:href="@{'/clientes/detalles/'+ ${representant.client.rfc}}" class="btn btn-danger ml-auto"><i class="icon ion-md-close"></i> Cancelar</a>
+                        </div>
+
+                    </form> <!-- fin del formulario -->
+                </div> <!-- Fin Contenedor General -->
+
+                    </div> <!-- fin del contenido de página -->
+            </div> <!-- fin bar-status -->
+        </div> <!-- fin de cabecera -->
+    </div> <!-- Fin del contenido general -->
+    </div> <!-- Fin del contenido general -->
+
+    <!-- scripts -->
+    <script th:replace="includes/layoutScript :: jquery"></script>
+    <script th:replace="includes/layoutScript :: popper"></script>
+    <script th:replace="includes/layoutScript :: jbootstrap"></script>
 </body>
 </html>
